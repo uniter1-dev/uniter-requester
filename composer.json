@@ -1,0 +1,45 @@
+{
+    "name": "php-uniter/php-uniter-requester",
+    "description": "PhpUniter integration package. Assistant for automatic test generation. Commands for registration user and for sending yours class to generate test for it. Class for converting all methods to public on load",
+    "keywords": [
+        "php-uniter",
+        "php-uniter-requester"
+    ],
+    "homepage": "https://github.com/php-uniter/php-uniter-requester.git",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Eduard Fomin",
+            "email": "eduard.fomin@uniter1.tech",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^7.4"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpUniter\\Requester\\": "src",
+            "PhpUniter\\External\\": "external"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpUniter\\Requester\\Tests\\": "tests"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

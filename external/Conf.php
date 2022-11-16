@@ -1,13 +1,15 @@
 <?php
 
+namespace PhpUniter\External;
+
 class Conf
 {
     private static array $settings = [
         'accessToken'         => 'lJfGZsAM8lmyW7LYAKpbOn2iI5GZadWYAo083toD',
         'baseUrl'             => 'http://uniter1.loc',
         'projectDirectory'    => '/home/sergey/http/requester',
-        'preprocess'          => true,
-        'obfuscate'           => true,
+        'preprocess'          => false,
+        'obfuscate'           => false,
         'unitTestBaseClass'   => 'PHPUnit\Framework\TestCase',
         'unitTestsDirectory'  => 'tests/Resulted',
         'baseNamespace'       => 'Tests\Unit',

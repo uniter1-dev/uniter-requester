@@ -2,9 +2,10 @@
 
 namespace PhpUniter\Requester;
 
-use Conf;
 use GuzzleHttp\Exception\GuzzleException;
 
+use PhpUniter\External\Conf;
+use PhpUniter\External\Report;
 use PhpUniter\Requester\Application\File\Exception\FileNotAccessed;
 use PhpUniter\Requester\Application\Generation\NamespaceGenerator;
 use PhpUniter\Requester\Application\Generation\PathCorrector;
@@ -18,7 +19,6 @@ use PhpUniter\Requester\Infrastructure\Integrations\PhpUniterIntegration;
 use PhpUniter\Requester\Infrastructure\Repository\UnitTestRepository;
 use PhpUniter\Requester\Infrastructure\Request\GenerateClient;
 use PhpUniter\Requester\Infrastructure\Request\GenerateRequest;
-use Report;
 use Throwable;
 
 
@@ -40,20 +40,20 @@ class Requester
         $generateClient = new GenerateClient();
         $generateRequest = new GenerateRequest(
             'POST',
-            $conf::get('php-uniter.baseUrl').'/api/v1/generator/generate',
+            $conf::get('baseUrl').'/api/v1/generator/generate',
             [
                 'accept'        => ['application/json'],
                 'timeout'       => 2,
             ],
-            $conf::get('php-uniter.accessToken')
+            $conf::get('accessToken')
         );
         $phpUniterIntegration = new PhpUniterIntegration($generateClient, $generateRequest);
-        $placer = new Placer(new UnitTestRepository($conf::get('php-uniter.projectDirectory')));
+        $placer = new Placer(new UnitTestRepository($conf::get('projectDirectory')));
         $keyGenerator = new RandomMaker();
         $pathCorrector = new PathCorrector();
-        $namespaceGenerator = new NamespaceGenerator($conf::get('php-uniter.baseNamespace'), $conf::get('php-uniter.unitTestsDirectory'), $pathCorrector);
+        $namespaceGenerator = new NamespaceGenerator($conf::get('baseNamespace'), $conf::get('unitTestsDirectory'), $pathCorrector);
         $this->phpUnitService = new PhpUnitService($phpUniterIntegration, $placer, $keyGenerator, $namespaceGenerator);
-        $this->preprocessor = new Preprocessor($conf::get('php-uniter.preprocess'));
+        $this->preprocessor = new Preprocessor($conf::get('preprocess'));
         $this->obfuscatorFabric = new ObfuscatorFabric();
         $this->report = $report;
     }

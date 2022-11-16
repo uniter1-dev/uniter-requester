@@ -1,5 +1,7 @@
 <?php
 
+namespace PhpUniter\External;
+
 class Report
 {
     public function info(string $message): void
