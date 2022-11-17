@@ -29,21 +29,27 @@ use Throwable;
 
 class Requester
 {
-    private Conf $conf;
-    private PhpUnitService $phpUnitService;
-    private Preprocessor $preprocessor;
-    private ObfuscatorFabric $obfuscatorFabric;
-    private Report $report;
-    private GenerateClient $generateClient;
+    public Conf $conf;
+    public PhpUnitService $phpUnitService;
+    public Preprocessor $preprocessor;
+    public ObfuscatorFabric $obfuscatorFabric;
+    public Report $report;
+    public GenerateClient $generateClient;
+    public PhpUniterRegistration $registration;
+    public RegisterRequest $registerRequest;
+    public PhpUnitUserRegisterService $registerService;
+    private Validator $validator;
 
 
     /**
      * @param Conf $conf
      * @param Report $report
      */
-    public function __construct(Conf $conf, Report $report)
+    public function __construct(Conf $conf, Report $report, Validator $validator)
     {
         $this->conf = $conf;
+        $this->report = $report;
+
         $this->generateClient = new GenerateClient();
 
         $generateRequest = new GenerateRequest(
@@ -63,7 +69,22 @@ class Requester
         $this->phpUnitService = new PhpUnitService($phpUniterIntegration, $placer, $keyGenerator, $namespaceGenerator);
         $this->preprocessor = new Preprocessor($conf::get('preprocess'));
         $this->obfuscatorFabric = new ObfuscatorFabric();
-        $this->report = $report;
+
+        $this->registerRequest = new RegisterRequest(
+            'POST',
+
+            $this->conf::get('baseUrl').'/api/v1/registration/access-token',
+
+            [
+                'accept'        => ['application/json'],
+                'timeout'       => 2,
+            ]
+        );
+
+        $this->registration = new PhpUniterRegistration($this->generateClient, $this->registerRequest);
+        $this->registerService = new PhpUnitUserRegisterService($this->registration );
+
+        $this->validator = $validator;
     }
 
     public function generate($filePath): int
@@ -101,36 +122,23 @@ class Requester
     public function register(string $email, string $password): ?int
     {
         try {
-            $registerRequest = new RegisterRequest(
-                'POST',
 
-                $this->conf::get('baseUrl').'/api/v1/registration/access-token',
-
-                [
-                    'accept'        => ['application/json'],
-                    'timeout'       => 2,
-                ]
-            );
-
-            $registration = new PhpUniterRegistration($this->generateClient, $registerRequest);
-            $registerService = new PhpUnitUserRegisterService($registration );
-
-            $validator = Validator::make(
-                ['email'    => $email, 'password' => $password],
+            $this->validator->setData(['email'    => $email, 'password' => $password]);
+            $this->validator->setRules(
                 [
                     'email'    => 'required|string|email|max:255',
                     'password' => ['required', 'string'],
                 ]);
 
             if (!is_string($email) || !is_string($password)) {
-                throw new ValidationException($validator);
+                throw new ValidationException($this->validator);
             }
 
-            if ($validator->fails()) {
-                throw new ValidationException($validator);
+            if ($this->validator->fails()) {
+                throw new ValidationException($this->validator);
             }
 
-            if ($registerService->process($email, $password)) {
+            if ($this->registerService->process($email, $password)) {
                 $this->report->info('User registered. Access token in your email. Put it in .env file - PHP_UNITER_ACCESS_TOKEN');
             }
         } catch (ValidationException $e) {
