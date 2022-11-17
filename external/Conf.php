@@ -5,7 +5,7 @@ namespace PhpUniter\External;
 class Conf
 {
     private static array $settings = [
-        'accessToken'         => 'DXtuFo4riyIAwf5mBDg1ri7x02ki04d1QANrsuGK',
+        'accessToken'         => 'WLDhA4YMiZM9x8JdpLcEnAYccNgoM2ZbsMtLud5e',
         'baseUrl'             => 'http://uniter1.loc',
         'projectDirectory'    => '/home/sergey/http/requester',
         'preprocess'          => false,

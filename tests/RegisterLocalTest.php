@@ -29,10 +29,19 @@ class RegisterLocalTest extends TestCase
         $this->report = new Report();
     }
 
-    public function testIsWritable()
+    public function testGenerate()
     {
         $requester = new Requester($this->conf, $this->report);
         $code = $requester->generate('src/PhpUnitTestHelper.php');
+
+        self::assertEquals(0, $code);
+    }
+
+    public function testRegister()
+    {
+        $requester = new Requester($this->conf, $this->report);
+        $code = $requester->register(   'a'.uniqid().'@test.ru',
+            'NewMockery0',);
 
         self::assertEquals(0, $code);
     }
