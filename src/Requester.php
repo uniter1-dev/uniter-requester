@@ -8,6 +8,7 @@ use PhpUniter\External\Conf;
 use PhpUniter\External\Report;
 use PhpUniter\External\ValidationException;
 use PhpUniter\External\Validator;
+use PhpUniter\External\ValidatorInterface;
 use PhpUniter\Requester\Application\File\Exception\FileNotAccessed;
 use PhpUniter\Requester\Application\Generation\NamespaceGenerator;
 use PhpUniter\Requester\Application\Generation\PathCorrector;
@@ -38,18 +39,16 @@ class Requester
     public PhpUniterRegistration $registration;
     public RegisterRequest $registerRequest;
     public PhpUnitUserRegisterService $registerService;
-    private Validator $validator;
-
+    public ?Validator $validator;
 
     /**
      * @param Conf $conf
      * @param Report $report
      */
-    public function __construct(?Conf $conf = null, ?Report $report = null, ?Validator $validator = null)
+    public function __construct(?Conf $conf = null, ?Report $report = null)
     {
         $this->conf = $conf ?? new Conf();
         $this->report = $report ?? new Report();
-        $this->validator = $validator ?? new Validator();
 
         $this->generateClient = new GenerateClient();
 
@@ -89,6 +88,7 @@ class Requester
     public function generate($filePath): int
     {
         try {
+
             chdir($this->conf::get('basePath'));
 
              if (!is_readable($filePath)) {
@@ -118,20 +118,12 @@ class Requester
     /**
      * Execute the console command.
      */
-    public function register(string $email, string $password): ?int
+    public function register(string $email, string $password, ?ValidatorInterface $validator = null): ?int
     {
         try {
 
+            $this->validator = $validator ?? new Validator();
             $this->validator->setData(['email'    => $email, 'password' => $password]);
-            $this->validator->setRules(
-                [
-                    'email'    => 'required|string|email|max:255',
-                    'password' => ['required', 'string'],
-                ]);
-
-            if (!is_string($email) || !is_string($password)) {
-                throw new ValidationException($this->validator);
-            }
 
             if ($this->validator->fails()) {
                 throw new ValidationException($this->validator);

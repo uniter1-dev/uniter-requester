@@ -7,19 +7,50 @@ class Validator
 
     private array $errors = [];
     private array $data = [];
-    private array $rules = [];
 
-    public static function make(array $data, array $rules): Validator
-    {
-        $validator = new Validator();
-        $validator->setData($data);
-        $validator->setRules($rules);
-        return $validator;
-    }
+    private bool $fail = false;
 
     public function fails(): bool
     {
-        return false;
+        return !$this->passes();
+    }
+
+    public function passes(): bool
+    {
+        if (!array_key_exists('email', $this->data)) {
+            $this->setError(['No email in validation data']);
+            return false;
+        }
+
+        if (!array_key_exists('password', $this->data)) {
+            $this->setError(['No password in validation data']);
+            return false;
+        }
+
+        $email = $this->data['email'];
+        $password = $this->data['password'];
+
+        if (empty($email)) {
+            $this->setError(['Empty email in validation data']);
+            return false;
+        }
+
+        if (empty($password)) {
+            $this->setError(['Empty password in validation data']);
+            return false;
+        }
+
+        if (!self::isValidEmail($email)) {
+            $this->setError(['Email is not valid']);
+            return false;
+        }
+
+        return true;
+    }
+
+    public static function isValidEmail($email)
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
     public function errors(): array
@@ -51,20 +82,5 @@ class Validator
         $this->data = $data;
     }
 
-    /**
-     * @return array
-     */
-    public function getRules(): array
-    {
-        return $this->rules;
-    }
-
-    /**
-     * @param array $rules
-     */
-    public function setRules(array $rules): void
-    {
-        $this->rules = $rules;
-    }
 
 }
