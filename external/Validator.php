@@ -4,7 +4,6 @@ namespace PhpUniter\External;
 
 class Validator
 {
-
     private array $errors = [];
     private array $data = [];
 
@@ -81,6 +80,4 @@ class Validator
     {
         $this->data = $data;
     }
-
-
 }

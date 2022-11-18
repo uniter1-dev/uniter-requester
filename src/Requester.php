@@ -27,7 +27,6 @@ use PhpUniter\Requester\Infrastructure\Request\GenerateRequest;
 use PhpUniter\Requester\Infrastructure\Request\RegisterRequest;
 use Throwable;
 
-
 class Requester
 {
     public Conf $conf;
@@ -40,6 +39,7 @@ class Requester
     public RegisterRequest $registerRequest;
     public PhpUnitUserRegisterService $registerService;
     public ?Validator $validator;
+    public Placer $placer;
 
     /**
      * @param Conf $conf
@@ -54,27 +54,25 @@ class Requester
 
         $generateRequest = new GenerateRequest(
             'POST',
-            $conf::get('baseUrl').$conf::get('generationPath'),
+            $this->conf->get('baseUrl').$this->conf->get('generationPath'),
             [
                 'accept'        => ['application/json'],
                 'timeout'       => 2,
             ],
-            $conf::get('accessToken')
+            $this->conf->get('accessToken')
         );
         $phpUniterIntegration = new PhpUniterIntegration($this->generateClient, $generateRequest);
-        $placer = new Placer(new UnitTestRepository($conf::get('projectDirectory')));
+        $this->placer = new Placer(new UnitTestRepository($this->conf->get('projectDirectory')));
         $keyGenerator = new RandomMaker();
         $pathCorrector = new PathCorrector();
-        $namespaceGenerator = new NamespaceGenerator($conf::get('baseNamespace'), $conf::get('unitTestsDirectory'), $pathCorrector);
-        $this->phpUnitService = new PhpUnitService($phpUniterIntegration, $placer, $keyGenerator, $namespaceGenerator);
-        $this->preprocessor = new Preprocessor($conf::get('preprocess'));
+        $namespaceGenerator = new NamespaceGenerator($this->conf->get('baseNamespace'), $this->conf->get('unitTestsDirectory'), $pathCorrector);
+        $this->phpUnitService = new PhpUnitService($phpUniterIntegration, $this->placer, $keyGenerator, $namespaceGenerator);
+        $this->preprocessor = new Preprocessor($this->conf->get('preprocess'));
         $this->obfuscatorFabric = new ObfuscatorFabric();
 
         $this->registerRequest = new RegisterRequest(
             'POST',
-
             $this->conf::get('baseUrl').$this->conf::get('registrationPath'),
-
             [
                 'accept'        => ['application/json'],
                 'timeout'       => 2,
@@ -82,16 +80,15 @@ class Requester
         );
 
         $this->registration = new PhpUniterRegistration($this->generateClient, $this->registerRequest);
-        $this->registerService = new PhpUnitUserRegisterService($this->registration );
+        $this->registerService = new PhpUnitUserRegisterService($this->registration);
     }
 
     public function generate($filePath): int
     {
         try {
-
             chdir($this->conf::get('basePath'));
 
-             if (!is_readable($filePath)) {
+            if (!is_readable($filePath)) {
                 throw new FileNotAccessed("File $filePath was not found");
             }
 
@@ -121,7 +118,6 @@ class Requester
     public function register(string $email, string $password, ?ValidatorInterface $validator = null): ?int
     {
         try {
-
             $this->validator = $validator ?? new Validator();
             $this->validator->setData(['email'    => $email, 'password' => $password]);
 
