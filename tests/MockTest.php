@@ -4,19 +4,12 @@ namespace PhpUniter\Requester\Tests;
 
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Middleware;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
-use PhpUniter\Requester\Application\Generation\NamespaceGenerator;
-use PhpUniter\Requester\Application\Obfuscator\KeyGenerator\StableMaker;
-use PhpUniter\Requester\Application\Obfuscator\ObfuscatorFabric;
-use PhpUniter\Requester\Application\PhpUnitService;
 use PhpUniter\Requester\Application\Placer;
-use PhpUniter\Requester\Infrastructure\Integrations\PhpUniterIntegration;
+
 use PhpUniter\Requester\Infrastructure\Repository\FakeUnitTestRepository;
-use PhpUniter\Requester\Infrastructure\Repository\UnitTestRepositoryInterface;
 use PhpUniter\Requester\Infrastructure\Request\GenerateClient;
-use PhpUniter\Requester\Infrastructure\Request\GenerateRequest;
 use PhpUniter\Requester\Requester;
 
 class MockTest extends TestCase
@@ -47,6 +40,7 @@ class MockTest extends TestCase
         $client = new GenerateClient(['handler' => $handlerStack]);
         $requester->generateClient = $client;
         $requester->placer = new Placer($fakeRepository);
+        $requester->phpUnitService->testPlacer = $requester->placer;
 
         $requester->generate(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input');
 

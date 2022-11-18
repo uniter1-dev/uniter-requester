@@ -16,7 +16,7 @@ use PhpUniter\Requester\Infrastructure\Integrations\PhpUniterIntegration;
 
 class PhpUnitService
 {
-    private Placer $testPlacer;
+    public Placer $testPlacer;
     private PhpUniterIntegration $integration;
     private ObfuscateNameMaker $keyGenerator;
     private bool $toObfuscate;
