@@ -45,16 +45,17 @@ class Requester
      * @param Conf $conf
      * @param Report $report
      */
-    public function __construct(Conf $conf, Report $report, Validator $validator)
+    public function __construct(?Conf $conf = null, ?Report $report = null, ?Validator $validator = null)
     {
-        $this->conf = $conf;
-        $this->report = $report;
+        $this->conf = $conf ?? new Conf();
+        $this->report = $report ?? new Report();
+        $this->validator = $validator ?? new Validator();
 
         $this->generateClient = new GenerateClient();
 
         $generateRequest = new GenerateRequest(
             'POST',
-            $conf::get('baseUrl').'/api/v1/generator/generate',
+            $conf::get('baseUrl').$conf::get('generationPath'),
             [
                 'accept'        => ['application/json'],
                 'timeout'       => 2,
@@ -73,7 +74,7 @@ class Requester
         $this->registerRequest = new RegisterRequest(
             'POST',
 
-            $this->conf::get('baseUrl').'/api/v1/registration/access-token',
+            $this->conf::get('baseUrl').$this->conf::get('registrationPath'),
 
             [
                 'accept'        => ['application/json'],
@@ -83,8 +84,6 @@ class Requester
 
         $this->registration = new PhpUniterRegistration($this->generateClient, $this->registerRequest);
         $this->registerService = new PhpUnitUserRegisterService($this->registration );
-
-        $this->validator = $validator;
     }
 
     public function generate($filePath): int

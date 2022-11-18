@@ -14,6 +14,8 @@ class Conf
         'unitTestsDirectory'  => 'tests/Resulted',
         'baseNamespace'       => 'Tests\Unit',
         'basePath'            => '/home/sergey/http/requester',
+        'registrationPath' => '/api/v1/registration/access-token',
+        'generationPath' => '/api/v1/generator/generate',
     ];
 
     public static function get($key)
