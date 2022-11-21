@@ -62,8 +62,6 @@ class MockTest extends TestCase
         $pathCorrector = new PathCorrector();
         $namespaceGenerator = new NamespaceGenerator($requester->conf->get('baseNamespace'), $requester->conf->get('unitTestsDirectory'), $pathCorrector);
         $requester->phpUnitService = new PhpUnitService($phpUniterIntegration, new Placer($fakeRepository), $keyGenerator, $namespaceGenerator);
-        $requester->placer = new Placer($fakeRepository);
-        $requester->phpUnitService->testPlacer = $requester->placer;
 
         $res = $requester->generate(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input');
 

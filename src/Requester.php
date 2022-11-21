@@ -34,13 +34,8 @@ class Requester
     public Preprocessor $preprocessor;
     public ObfuscatorFabric $obfuscatorFabric;
     public Report $report;
-    public PhpUniterRegistration $registration;
-    public RegisterRequest $registerRequest;
     public PhpUnitUserRegisterService $registerService;
-    public ?Validator $validator;
-    public Placer $placer;
-    public PhpUniterIntegration $phpUniterIntegration;
-    public GenerateRequest $generateRequest;
+
 
     /**
      * @param Conf $conf
@@ -62,16 +57,16 @@ class Requester
             ],
             $this->conf->get('accessToken')
         );
-        $this->phpUniterIntegration = new PhpUniterIntegration($generateClient, $generateRequest);
-        $this->placer = new Placer(new UnitTestRepository($this->conf->get('projectDirectory')));
+        $phpUniterIntegration = new PhpUniterIntegration($generateClient, $generateRequest);
+        $placer = new Placer(new UnitTestRepository($this->conf->get('projectDirectory')));
         $keyGenerator = new RandomMaker();
         $pathCorrector = new PathCorrector();
         $namespaceGenerator = new NamespaceGenerator($this->conf->get('baseNamespace'), $this->conf->get('unitTestsDirectory'), $pathCorrector);
-        $this->phpUnitService = new PhpUnitService($this->phpUniterIntegration, $this->placer, $keyGenerator, $namespaceGenerator);
+        $this->phpUnitService = new PhpUnitService($phpUniterIntegration, $placer, $keyGenerator, $namespaceGenerator);
         $this->preprocessor = new Preprocessor($this->conf->get('preprocess'));
         $this->obfuscatorFabric = new ObfuscatorFabric();
 
-        $this->registerRequest = new RegisterRequest(
+        $registerRequest = new RegisterRequest(
             'POST',
             $this->conf::get('baseUrl').$this->conf::get('registrationPath'),
             [
@@ -80,8 +75,8 @@ class Requester
             ]
         );
 
-        $this->registration = new PhpUniterRegistration($generateClient, $this->registerRequest);
-        $this->registerService = new PhpUnitUserRegisterService($this->registration);
+        $registration = new PhpUniterRegistration($generateClient, $registerRequest);
+        $this->registerService = new PhpUnitUserRegisterService($registration);
     }
 
     public function generate($filePath): int
@@ -96,7 +91,6 @@ class Requester
             try {
                 $this->preprocessor->preprocess($filePath);
                 $localFile = $this->obfuscatorFabric->createFile($filePath);
-                /** @var PhpUnitTest $phpUnitTest */
                 $phpUnitTest = $this->phpUnitService->process($localFile, $this->obfuscatorFabric);
                 $this->report->info('Generated test was written to '.$phpUnitTest->getPathToTest());
             } catch (GuzzleException $e) {
@@ -119,11 +113,11 @@ class Requester
     public function register(string $email, string $password, ?ValidatorInterface $validator = null): ?int
     {
         try {
-            $this->validator = $validator ?? new Validator();
-            $this->validator->setData(['email'    => $email, 'password' => $password]);
+            $validator = $validator ?? new Validator();
+            $validator->setData(['email'    => $email, 'password' => $password]);
 
-            if ($this->validator->fails()) {
-                throw new ValidationException($this->validator);
+            if ($validator->fails()) {
+                throw new ValidationException($validator);
             }
 
             if ($this->registerService->process($email, $password)) {
