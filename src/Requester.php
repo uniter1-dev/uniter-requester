@@ -3,7 +3,6 @@
 namespace PhpUniter\Requester;
 
 use GuzzleHttp\Exception\GuzzleException;
-
 use PhpUniter\External\Conf;
 use PhpUniter\External\Report;
 use PhpUniter\External\ValidationException;
@@ -25,7 +24,6 @@ use PhpUniter\Requester\Infrastructure\Repository\UnitTestRepository;
 use PhpUniter\Requester\Infrastructure\Request\GenerateClient;
 use PhpUniter\Requester\Infrastructure\Request\GenerateRequest;
 use PhpUniter\Requester\Infrastructure\Request\RegisterRequest;
-use Throwable;
 
 class Requester
 {
@@ -35,10 +33,10 @@ class Requester
     public ObfuscatorFabric $obfuscatorFabric;
     public Report $report;
     public PhpUnitUserRegisterService $registerService;
-
+    private PhpUnitTest $phpUnitTest;
 
     /**
-     * @param Conf $conf
+     * @param Conf   $conf
      * @param Report $report
      */
     public function __construct(?Conf $conf = null, ?Report $report = null)
@@ -91,14 +89,14 @@ class Requester
             try {
                 $this->preprocessor->preprocess($filePath);
                 $localFile = $this->obfuscatorFabric->createFile($filePath);
-                $phpUnitTest = $this->phpUnitService->process($localFile, $this->obfuscatorFabric);
-                $this->report->info('Generated test was written to '.$phpUnitTest->getPathToTest());
+                $this->phpUnitTest = $this->phpUnitService->process($localFile, $this->obfuscatorFabric);
+                $this->report->info('Generated test was written to '.$this->phpUnitTest->getPathToTest());
             } catch (GuzzleException $e) {
                 $this->report->error($e->getMessage());
 
                 return 1;
             }
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             $this->report->error($e->getMessage());
 
             return 1;
@@ -131,7 +129,7 @@ class Requester
             $this->report->error($e->getMessage());
 
             return 1;
-        } catch (Throwable $e) {
+        } catch (\Throwable $e) {
             $this->report->error($e->getMessage());
 
             return 1;
@@ -151,5 +149,10 @@ class Requester
         }
 
         return $res;
+    }
+
+    public function getPhpUnitTest(): PhpUnitTest
+    {
+        return $this->phpUnitTest;
     }
 }
