@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace PhpUniter\Requester;
 
 use Composer\Autoload\ClassLoader;
+use PhpUniter\External\Conf;
 use PhpUniter\Requester\Infrastructure\Exception\ClassNotFound;
 
 /**
@@ -23,7 +24,7 @@ class PhpUnitTestHelper
         $classNameExploded = explode('\\', $fullyQualifiedClassName);
         $className = array_pop($classNameExploded);
 
-        $proxyClassName = "${className}".uniqid();
+        $proxyClassName = "{$className}".uniqid();
 
         try {
             $proxyClassBody = self::renderProxyClass($fullyQualifiedClassName, $className, $proxyClassName);
@@ -40,6 +41,7 @@ class PhpUnitTestHelper
 
     /**
      * @throws ClassNotFound
+     *
      * @psalm-suppress UnresolvableInclude
      */
     private static function getClassBody(string $fullyQualifiedClassName): string
@@ -64,7 +66,7 @@ class PhpUnitTestHelper
      */
     private static function loadClass(string $proxyFileName, string $proxyClassBody): void
     {
-        $fileName = __DIR__."/${proxyFileName}.php";
+        $fileName = __DIR__."/{$proxyFileName}.php";
 
         file_put_contents($fileName, $proxyClassBody);
 
@@ -91,7 +93,7 @@ class PhpUnitTestHelper
         $classBody = self::getClassBody($fullyQualifiedClassName);
 
         return preg_replace(
-            ["/class\s+${className}/i", '/(|public|private|protected)\s+(static\s+)?function/i'],
+            ["/class\s+{$className}/i", '/(|public|private|protected)\s+(static\s+)?function/i'],
             ["class $proxyClassName", 'public $2function'],
             $classBody
         );
@@ -99,6 +101,6 @@ class PhpUnitTestHelper
 
     private static function loadPath(): string
     {
-        return (string) env('PROJECT_DIRECTORY') ? (string) env('PROJECT_DIRECTORY').'/vendor/autoload.php' : (__DIR__.'/../../../autoload.php');
+        return (string) Conf::get('projectDirectory') ? (string) Conf::get('projectDirectory').'/vendor/autoload.php' : (__DIR__.'/../../../autoload.php');
     }
 }
