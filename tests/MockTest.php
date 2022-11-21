@@ -64,10 +64,11 @@ class MockTest extends TestCase
         $requester->placer = new Placer($fakeRepository);
         $requester->phpUnitService->testPlacer = $requester->placer;
 
-        $requester->generate(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input');
+        $res = $requester->generate(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input');
 
         $deObfuscatedTest = $fakeRepository->getFile('FooTest.php');
 
+        self::assertEquals(0, $res);
         self::assertEquals($result, $deObfuscatedTest);
     }
 
