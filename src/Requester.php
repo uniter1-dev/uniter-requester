@@ -34,12 +34,13 @@ class Requester
     public Preprocessor $preprocessor;
     public ObfuscatorFabric $obfuscatorFabric;
     public Report $report;
-    public GenerateClient $generateClient;
     public PhpUniterRegistration $registration;
     public RegisterRequest $registerRequest;
     public PhpUnitUserRegisterService $registerService;
     public ?Validator $validator;
     public Placer $placer;
+    public PhpUniterIntegration $phpUniterIntegration;
+    public GenerateRequest $generateRequest;
 
     /**
      * @param Conf $conf
@@ -50,7 +51,7 @@ class Requester
         $this->conf = $conf ?? new Conf();
         $this->report = $report ?? new Report();
 
-        $this->generateClient = new GenerateClient();
+        $generateClient = new GenerateClient();
 
         $generateRequest = new GenerateRequest(
             'POST',
@@ -61,12 +62,12 @@ class Requester
             ],
             $this->conf->get('accessToken')
         );
-        $phpUniterIntegration = new PhpUniterIntegration($this->generateClient, $generateRequest);
+        $this->phpUniterIntegration = new PhpUniterIntegration($generateClient, $generateRequest);
         $this->placer = new Placer(new UnitTestRepository($this->conf->get('projectDirectory')));
         $keyGenerator = new RandomMaker();
         $pathCorrector = new PathCorrector();
         $namespaceGenerator = new NamespaceGenerator($this->conf->get('baseNamespace'), $this->conf->get('unitTestsDirectory'), $pathCorrector);
-        $this->phpUnitService = new PhpUnitService($phpUniterIntegration, $this->placer, $keyGenerator, $namespaceGenerator);
+        $this->phpUnitService = new PhpUnitService($this->phpUniterIntegration, $this->placer, $keyGenerator, $namespaceGenerator);
         $this->preprocessor = new Preprocessor($this->conf->get('preprocess'));
         $this->obfuscatorFabric = new ObfuscatorFabric();
 
@@ -79,7 +80,7 @@ class Requester
             ]
         );
 
-        $this->registration = new PhpUniterRegistration($this->generateClient, $this->registerRequest);
+        $this->registration = new PhpUniterRegistration($generateClient, $this->registerRequest);
         $this->registerService = new PhpUnitUserRegisterService($this->registration);
     }
 

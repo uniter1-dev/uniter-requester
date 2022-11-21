@@ -6,10 +6,16 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use PhpUniter\Requester\Application\Generation\NamespaceGenerator;
+use PhpUniter\Requester\Application\Generation\PathCorrector;
+use PhpUniter\Requester\Application\Obfuscator\KeyGenerator\RandomMaker;
+use PhpUniter\Requester\Application\PhpUnitService;
 use PhpUniter\Requester\Application\Placer;
 
+use PhpUniter\Requester\Infrastructure\Integrations\PhpUniterIntegration;
 use PhpUniter\Requester\Infrastructure\Repository\FakeUnitTestRepository;
 use PhpUniter\Requester\Infrastructure\Request\GenerateClient;
+use PhpUniter\Requester\Infrastructure\Request\GenerateRequest;
 use PhpUniter\Requester\Requester;
 
 class MockTest extends TestCase
@@ -21,7 +27,7 @@ class MockTest extends TestCase
      */
     public function testCommand($input, $obfExpected, $obfTest, $result)
     {
-        $requester = new Requester();
+
         $fakeRepository = new FakeUnitTestRepository();
 
         $body = json_encode([
@@ -35,10 +41,26 @@ class MockTest extends TestCase
         $mock = new MockHandler([
             new Response(200, ['X-Foo' => 'Bar'], $body),
         ]);
+        $requester = new Requester();
+
+        $generateRequest = new GenerateRequest(
+            'POST',
+            $requester->conf->get('baseUrl').$requester->conf->get('generationPath'),
+            [
+                'accept'        => ['application/json'],
+                'timeout'       => 2,
+            ],
+            $requester->conf->get('accessToken')
+        );
 
         $handlerStack = HandlerStack::create($mock);
         $client = new GenerateClient(['handler' => $handlerStack]);
-        $requester->generateClient = $client;
+
+        $phpUniterIntegration = new PhpUniterIntegration($client, $generateRequest);
+        $keyGenerator = new RandomMaker();
+        $pathCorrector = new PathCorrector();
+        $namespaceGenerator = new NamespaceGenerator($requester->conf->get('baseNamespace'), $requester->conf->get('unitTestsDirectory'), $pathCorrector);
+        $requester->phpUnitService = new PhpUnitService($phpUniterIntegration, new Placer($fakeRepository), $keyGenerator, $namespaceGenerator);
         $requester->placer = new Placer($fakeRepository);
         $requester->phpUnitService->testPlacer = $requester->placer;
 
