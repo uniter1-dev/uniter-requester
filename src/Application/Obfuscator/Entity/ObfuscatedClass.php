@@ -56,6 +56,6 @@ class ObfuscatedClass implements Obfuscated
 
     public function getUniqueKey(): string
     {
-        return ($this->keyGenerator)->make();
+        return $this->keyGenerator->make();
     }
 }

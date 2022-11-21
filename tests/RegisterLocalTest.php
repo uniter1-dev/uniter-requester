@@ -2,7 +2,6 @@
 
 namespace PhpUniter\Requester\Tests;
 
-
 use PHPUnit\Framework\TestCase;
 use PhpUniter\External\Conf;
 use PhpUniter\External\Report;
@@ -40,8 +39,10 @@ class RegisterLocalTest extends TestCase
     public function testRegister()
     {
         $requester = new Requester($this->conf, $this->report);
-        $code = $requester->register(   'a'.uniqid().'@test.ru',
-            'NewMockery0',);
+        $code = $requester->register(
+            'a'.uniqid().'@test.ru',
+            'NewMockery0',
+        );
 
         self::assertEquals(0, $code);
     }

@@ -18,11 +18,11 @@ class Placer
     }
 
     /**
+     * @param string $relativePath // path from project root to test to write
+     *
      * @throws DirectoryPathWrong
      * @throws FileNotAccessed
      * @throws TestNotCreated
-     *
-     * @param string $relativePath // path from project root to test to write
      */
     public function placeUnitTest(PhpUnitTest $phpUnitTest, string $relativePath, string $className): int
     {

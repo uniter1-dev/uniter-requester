@@ -2,7 +2,6 @@
 
 namespace PhpUniter\Requester\Tests;
 
-
 use PHPUnit\Framework\TestCase;
 use PhpUniter\External\Conf;
 

@@ -2,7 +2,6 @@
 
 namespace PhpUniter\Requester\Tests;
 
-
 use PHPUnit\Framework\TestCase;
 use PhpUniter\Requester\Application\Generation\NamespaceGenerator;
 
@@ -23,7 +22,7 @@ class NamespaceTest extends TestCase
 
     public function getCases(): array
     {
-        $fname = __DIR__.'/'.'NamespaceTest.php';
+        $fname = __DIR__.'/NamespaceTest.php';
 
         return [
             [

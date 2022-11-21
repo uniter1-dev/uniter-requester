@@ -6,9 +6,6 @@ class ValidationException extends \Exception
 {
     private Validator $validator;
 
-    /**
-     * @param Validator $validator
-     */
     public function __construct(Validator $validator, string $message = 'The given data was invalid.')
     {
         parent::__construct($message);

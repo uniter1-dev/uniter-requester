@@ -11,7 +11,6 @@ use PhpUniter\Requester\Application\Generation\PathCorrector;
 use PhpUniter\Requester\Application\Obfuscator\KeyGenerator\StableMaker;
 use PhpUniter\Requester\Application\PhpUnitService;
 use PhpUniter\Requester\Application\Placer;
-
 use PhpUniter\Requester\Infrastructure\Integrations\PhpUniterIntegration;
 use PhpUniter\Requester\Infrastructure\Repository\FakeUnitTestRepository;
 use PhpUniter\Requester\Infrastructure\Request\GenerateClient;
@@ -27,7 +26,6 @@ class MockTest extends TestCase
      */
     public function testCommand($input, $obfExpected, $obfTest, $result)
     {
-
         $fakeRepository = new FakeUnitTestRepository();
 
         $body = json_encode([
@@ -55,7 +53,6 @@ class MockTest extends TestCase
 
         $handlerStack = HandlerStack::create($mock);
         $client = new GenerateClient(['handler' => $handlerStack]);
-        //$client = new GenerateClient();
 
         $phpUniterIntegration = new PhpUniterIntegration($client, $generateRequest);
         $keyGenerator = new StableMaker();
@@ -64,13 +61,17 @@ class MockTest extends TestCase
         $requester->phpUnitService = new PhpUnitService($phpUniterIntegration, new Placer($fakeRepository), $keyGenerator, $namespaceGenerator);
 
         $res = $requester->generate(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input');
+        $requestObfuscatedText = $requester->getPhpUnitTest()->getObfuscatedUnitTest();
 
         $deObfuscatedTest = $fakeRepository->getFile('FooTest.php');
 
+        self::actualize(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/ObfuscatedClass.php.expected', $requestObfuscatedText);
+        self::actualize(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/Deobfuscated.test.expected', $deObfuscatedTest);
+
+        self::assertEquals($obfExpected, $requestObfuscatedText);
         self::assertEquals(0, $res);
         self::assertEquals($result, $deObfuscatedTest);
     }
-
 
     public function getCases(): array
     {
@@ -102,5 +103,4 @@ class MockTest extends TestCase
     {
         return file_put_contents($path, $actual);
     }
-
 }

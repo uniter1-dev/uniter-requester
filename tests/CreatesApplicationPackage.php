@@ -2,11 +2,8 @@
 
 namespace PhpUniter\Requester\Tests;
 
-
 trait CreatesApplicationPackage
 {
-
-
     public function createApplication()
     {
     }

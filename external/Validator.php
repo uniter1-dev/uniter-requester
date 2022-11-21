@@ -18,11 +18,13 @@ class Validator
     {
         if (!array_key_exists('email', $this->data)) {
             $this->setError(['No email in validation data']);
+
             return false;
         }
 
         if (!array_key_exists('password', $this->data)) {
             $this->setError(['No password in validation data']);
+
             return false;
         }
 
@@ -31,16 +33,19 @@ class Validator
 
         if (empty($email)) {
             $this->setError(['Empty email in validation data']);
+
             return false;
         }
 
         if (empty($password)) {
             $this->setError(['Empty password in validation data']);
+
             return false;
         }
 
         if (!self::isValidEmail($email)) {
             $this->setError(['Email is not valid']);
+
             return false;
         }
 
@@ -65,17 +70,11 @@ class Validator
         $this->errors[] = $messages;
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         return $this->data;
     }
 
-    /**
-     * @param array $data
-     */
     public function setData(array $data): void
     {
         $this->data = $data;
