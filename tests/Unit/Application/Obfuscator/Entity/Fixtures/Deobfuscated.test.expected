@@ -1,47 +1,97 @@
 <?php
 namespace Tests\Unit\Foo\Bar\Application\Barbar\Entity;
 
+use Mockery;
+use PhpUniter\PackageLaravel\PhpUnitTestHelper;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 class FooTest extends MockeryTestCase
 {
     /**
-    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: bar, injection: self::FIRST
-    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: bar, injection: foo("arg1", "arg2", 10)
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: bar, flow: 1, injection: foo("arg1", "arg2", 10)
     */
-    public function test_bar()
+    public function test_barFlow1()
     {
-        $privateMethodClass = ClassHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
+        $privateMethodClass = PhpUnitTestHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
         $selfObjectFoo = Mockery::mock($privateMethodClass)->makePartial();
-        $this->assertEquals('PLACEHOLDER_ASSERT_RETURN', $selfObjectFoo->bar('PLACEHOLDER_ASSERT_v', 'PLACEHOLDER_ASSERT_w'));
+        $this->assertEquals('ASSERT_RETURN', $selfObjectFoo->bar('ASSERT_v', 'ASSERT_w'));
     }
     /**
-    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fOne, injection: explode(",", $x)
-    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fOne, injection: fTwo($argA, $argB, $argC, fThree($argD, $argE, $argF, $argG, $argH))
-    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fOne, injection: count($colors)
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: bar, flow: 01, injection: self::FIRST
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: bar, flow: 01, injection: foo("arg1", "arg2", 10)
     */
-    public function test_fOne()
+    public function test_barFlow01()
     {
-        $privateMethodClass = ClassHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
+        $privateMethodClass = PhpUnitTestHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
         $selfObjectFoo = Mockery::mock($privateMethodClass)->makePartial();
-        $this->assertEquals('PLACEHOLDER_ASSERT_RETURN', $selfObjectFoo->fOne('PLACEHOLDER_ASSERT_argA', 'PLACEHOLDER_ASSERT_argB', 'PLACEHOLDER_ASSERT_argC', 'PLACEHOLDER_ASSERT_argD', 'PLACEHOLDER_ASSERT_argE', 'PLACEHOLDER_ASSERT_argF', 'PLACEHOLDER_ASSERT_argG', 'PLACEHOLDER_ASSERT_argH'));
+        $this->assertEquals('ASSERT_RETURN', $selfObjectFoo->bar('ASSERT_v', 'ASSERT_w'));
     }
     /**
-    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fTwo, injection: $foo->one("a", "b")->two("c", "d", "e")->three("fg")->four()
-    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fTwo, injection: a()->b()->c()
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: bar, flow: 001, injection: self::FIRST
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: bar, flow: 001, injection: foo("arg1", "arg2", 10)
     */
-    public function test_fTwo()
+    public function test_barFlow001()
     {
-        $privateMethodClass = ClassHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
+        $privateMethodClass = PhpUnitTestHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
         $selfObjectFoo = Mockery::mock($privateMethodClass)->makePartial();
-        $this->assertEquals('PLACEHOLDER_ASSERT_RETURN', $selfObjectFoo->fTwo('PLACEHOLDER_ASSERT_strA', 'PLACEHOLDER_ASSERT_strB', 'PLACEHOLDER_ASSERT_strC', 'PLACEHOLDER_ASSERT_strD'));
+        $this->assertEquals('ASSERT_RETURN', $selfObjectFoo->bar('ASSERT_v', 'ASSERT_w'));
     }
     /**
-    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fThree, injection: foo()
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: bar, flow: 000, injection: self::FIRST
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: bar, flow: 000, injection: foo("arg1", "arg2", 10)
     */
-    public function test_fThree()
+    public function test_barFlow000()
     {
-        $privateMethodClass = ClassHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
+        $privateMethodClass = PhpUnitTestHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
         $selfObjectFoo = Mockery::mock($privateMethodClass)->makePartial();
-        $this->assertEquals('PLACEHOLDER_ASSERT_RETURN', $selfObjectFoo->fThree('PLACEHOLDER_ASSERT_strA', 'PLACEHOLDER_ASSERT_strB', 'PLACEHOLDER_ASSERT_strC', 'PLACEHOLDER_ASSERT_strD', 'PLACEHOLDER_ASSERT_strE'));
+        $this->assertEquals(10, $selfObjectFoo->bar('ASSERT_v', 'ASSERT_w'));
+    }
+    /**
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fOne, flow: 1, injection: explode(",", $x)
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fOne, flow: 1, injection: fTwo($argA, $argB, $argC, fThree($argD, $argE, $argF, $argG, $argH))
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fOne, flow: 1, injection: count($colors)
+    */
+    public function test_fOneFlow1()
+    {
+        $privateMethodClass = PhpUnitTestHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
+        $selfObjectFoo = Mockery::mock($privateMethodClass)->makePartial();
+        $this->assertEquals('ASSERT_RETURN', $selfObjectFoo->fOne('ASSERT_argA', 'ASSERT_argB', 'ASSERT_argC', 'ASSERT_argD', 'ASSERT_argE', 'ASSERT_argF', 'ASSERT_argG', 'ASSERT_argH'));
+    }
+    /**
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fOne, flow: 0, injection: explode(",", $x)
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fOne, flow: 0, injection: fTwo($argA, $argB, $argC, fThree($argD, $argE, $argF, $argG, $argH))
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fOne, flow: 0, injection: count($colors)
+    */
+    public function test_fOneFlow0()
+    {
+        $privateMethodClass = PhpUnitTestHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
+        $selfObjectFoo = Mockery::mock($privateMethodClass)->makePartial();
+        $this->assertEquals('ASSERT_RETURN', $selfObjectFoo->fOne('ASSERT_argA', 'ASSERT_argB', 'ASSERT_argC', 'ASSERT_argD', 'ASSERT_argE', 'ASSERT_argF', 'ASSERT_argG', 'ASSERT_argH'));
+    }
+    /**
+    */
+    public function test_fTwoFlow1()
+    {
+        $privateMethodClass = PhpUnitTestHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
+        $selfObjectFoo = Mockery::mock($privateMethodClass)->makePartial();
+        $this->assertEquals('ASSERT_RETURN', $selfObjectFoo->fTwo('ASSERT_strA', 'ASSERT_strB', 'ASSERT_strC', 'ASSERT_strD'));
+    }
+    /**
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fTwo, flow: 0, injection: $foo->one("a", "b")->two("c", "d", "e")->three("fg")->four()
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fTwo, flow: 0, injection: a()->b()->c()
+    */
+    public function test_fTwoFlow0()
+    {
+        $privateMethodClass = PhpUnitTestHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
+        $selfObjectFoo = Mockery::mock($privateMethodClass)->makePartial();
+        $this->assertEquals('ASSERT_RETURN', $selfObjectFoo->fTwo('ASSERT_strA', 'ASSERT_strB', 'ASSERT_strC', 'ASSERT_strD'));
+    }
+    /**
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: fThree, flow: , injection: foo()
+    */
+    public function test_fThreeFlow()
+    {
+        $privateMethodClass = PhpUnitTestHelper::makeAllMethodsPublic('Foo\Bar\Application\Barbar\Entity\\Foo');
+        $selfObjectFoo = Mockery::mock($privateMethodClass)->makePartial();
+        $this->assertEquals('ASSERT_RETURN', $selfObjectFoo->fThree('ASSERT_strA', 'ASSERT_strB', 'ASSERT_strC', 'ASSERT_strD', 'ASSERT_strE'));
     }
 }

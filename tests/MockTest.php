@@ -8,7 +8,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use PhpUniter\Requester\Application\Generation\NamespaceGenerator;
 use PhpUniter\Requester\Application\Generation\PathCorrector;
-use PhpUniter\Requester\Application\Obfuscator\KeyGenerator\RandomMaker;
+use PhpUniter\Requester\Application\Obfuscator\KeyGenerator\StableMaker;
 use PhpUniter\Requester\Application\PhpUnitService;
 use PhpUniter\Requester\Application\Placer;
 
@@ -55,9 +55,10 @@ class MockTest extends TestCase
 
         $handlerStack = HandlerStack::create($mock);
         $client = new GenerateClient(['handler' => $handlerStack]);
+        //$client = new GenerateClient();
 
         $phpUniterIntegration = new PhpUniterIntegration($client, $generateRequest);
-        $keyGenerator = new RandomMaker();
+        $keyGenerator = new StableMaker();
         $pathCorrector = new PathCorrector();
         $namespaceGenerator = new NamespaceGenerator($requester->conf->get('baseNamespace'), $requester->conf->get('unitTestsDirectory'), $pathCorrector);
         $requester->phpUnitService = new PhpUnitService($phpUniterIntegration, new Placer($fakeRepository), $keyGenerator, $namespaceGenerator);
@@ -90,6 +91,18 @@ class MockTest extends TestCase
                 file_get_contents(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/Deobfuscated.test.expected'),
             ],
         ];
+    }
+
+    public static function actualize(string $path, string $actual, $doIt = false): void
+    {
+        if ($doIt) {
+            $done = self::updateExpected($path, $actual);
+        }
+    }
+
+    public static function updateExpected(string $path, string $actual)
+    {
+        return file_put_contents($path, $actual);
     }
 
 }
