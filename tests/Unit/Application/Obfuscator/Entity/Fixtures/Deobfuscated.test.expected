@@ -1,5 +1,6 @@
 <?php
 namespace PhpUniter\Requester\Tests\Resulted\Foo\Bar\Application\Barbar\Entity;
+use PhpUniter\Requester\PhpUnitTestHelper;
 
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;

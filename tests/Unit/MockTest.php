@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use PhpUniter\Requester\Application\Generation\NamespaceGenerator;
 use PhpUniter\Requester\Application\Generation\PathCorrector;
+use PhpUniter\Requester\Application\Generation\UseGenerator;
 use PhpUniter\Requester\Application\Obfuscator\KeyGenerator\StableMaker;
 use PhpUniter\Requester\Application\PhpUnitService;
 use PhpUniter\Requester\Application\Placer;
@@ -58,16 +59,18 @@ class MockTest extends TestCase
         $phpUniterIntegration = new PhpUniterIntegration($client, $generateRequest);
         $keyGenerator = new StableMaker();
         $pathCorrector = new PathCorrector();
+
+        $useGenerator = new UseGenerator($requester->conf->get('helperClass'));
         $namespaceGenerator = new NamespaceGenerator($requester->conf->get('baseNamespace'), $requester->conf->get('unitTestsDirectory'), $pathCorrector);
-        $requester->phpUnitService = new PhpUnitService($phpUniterIntegration, new Placer($fakeRepository), $keyGenerator, $namespaceGenerator);
+        $requester->phpUnitService = new PhpUnitService($phpUniterIntegration, new Placer($fakeRepository), $keyGenerator, $namespaceGenerator, $useGenerator);
 
         $res = $requester->generate(__DIR__.'/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input');
         $requestObfuscatedText = $requester->getPhpUnitTest()->getObfuscatedUnitTest();
 
         $deObfuscatedTest = $fakeRepository->getFile('FooTest.php');
 
-        self::actualize(__DIR__.'/Application/Obfuscator/Entity/Fixtures/Obfuscated.test.input', $requestObfuscatedText, true);
-        self::actualize(__DIR__.'/Application/Obfuscator/Entity/Fixtures/Deobfuscated.test.expected', $deObfuscatedTest, true);
+        self::actualize(__DIR__.'/Application/Obfuscator/Entity/Fixtures/Obfuscated.test.input', $requestObfuscatedText);
+        self::actualize(__DIR__.'/Application/Obfuscator/Entity/Fixtures/Deobfuscated.test.expected', $deObfuscatedTest);
 
         self::assertEquals(0, $res);
         self::assertEquals($obfTest, $requestObfuscatedText);
@@ -92,5 +95,4 @@ class MockTest extends TestCase
             ],
         ];
     }
-
 }

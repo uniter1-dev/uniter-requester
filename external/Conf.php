@@ -13,6 +13,7 @@ class Conf
         'unitTestBaseClass'   => 'PHPUnit\Framework\TestCase',
         'unitTestsDirectory'  => 'tests/Resulted',
         'baseNamespace'       => 'PhpUniter\Requester\Tests\Resulted',
+        'helperClass'         => 'PhpUniter\Requester\PhpUnitTestHelper',
         'basePath'            => '/home/sergey/http/requester',
         'registrationPath'    => '/api/v1/registration/access-token',
         'generationPath'      => '/api/v1/generator/generate',

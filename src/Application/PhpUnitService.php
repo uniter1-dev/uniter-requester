@@ -6,6 +6,7 @@ use PhpUniter\Requester\Application\File\Entity\LocalFile;
 use PhpUniter\Requester\Application\File\Exception\ObfucsatorNull;
 use PhpUniter\Requester\Application\Generation\Exception\TestNotCreated;
 use PhpUniter\Requester\Application\Generation\NamespaceGenerator;
+use PhpUniter\Requester\Application\Generation\UseGenerator;
 use PhpUniter\Requester\Application\Obfuscator\Entity\ObfuscatedClass;
 use PhpUniter\Requester\Application\Obfuscator\KeyGenerator\ObfuscateNameMaker;
 use PhpUniter\Requester\Application\Obfuscator\ObfuscatorFabric;
@@ -21,12 +22,14 @@ class PhpUnitService
     private ObfuscateNameMaker $keyGenerator;
     private bool $toObfuscate;
     private NamespaceGenerator $namespaceGenerator;
+    private UseGenerator $useGenerator;
 
     public function __construct(
         PhpUniterIntegration $phpUniterIntegration,
         Placer $testPlacer,
         ObfuscateNameMaker $keyGenerator,
         NamespaceGenerator $namespaceGenerator,
+        UseGenerator $useGenerator,
         bool $toObfuscate = true
     ) {
         $this->integration = $phpUniterIntegration;
@@ -34,6 +37,7 @@ class PhpUnitService
         $this->keyGenerator = $keyGenerator;
         $this->toObfuscate = $toObfuscate;
         $this->namespaceGenerator = $namespaceGenerator;
+        $this->useGenerator = $useGenerator;
     }
 
     /**
@@ -76,7 +80,10 @@ class PhpUnitService
 
         $srcNamespace = $this->namespaceGenerator->findNamespace($classText);
         $testNamespace = $this->namespaceGenerator->makeNamespace($srcNamespace);
-        $testCode = $this->namespaceGenerator->addNamespace($phpUnitTest->getFinalUnitTest(), $testNamespace);
+        $testText = $phpUnitTest->getFinalUnitTest();
+        $useHelper = $this->useGenerator->getUseHelper($testText);
+        $testCode = $this->useGenerator->addUse($useHelper, $testText);
+        $testCode = $this->namespaceGenerator->addNamespace($testCode, $testNamespace);
         $relativePath = $this->namespaceGenerator->makePathToTest($srcNamespace);
 
         $phpUnitTest->setFinalUnitTest($testCode);

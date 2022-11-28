@@ -9,7 +9,8 @@ use PhpUniter\Requester\Requester;
 use PhpUniter\Requester\Tests\CreatesApplicationPackage;
 
 /**
- * todo: change to remote request test
+ * todo: change to remote request test.
+ *
  * @property Report $report
  */
 class RegisterLocalTest extends TestCase

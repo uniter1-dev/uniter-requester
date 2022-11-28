@@ -11,6 +11,7 @@ use PhpUniter\External\ValidatorInterface;
 use PhpUniter\Requester\Application\File\Exception\FileNotAccessed;
 use PhpUniter\Requester\Application\Generation\NamespaceGenerator;
 use PhpUniter\Requester\Application\Generation\PathCorrector;
+use PhpUniter\Requester\Application\Generation\UseGenerator;
 use PhpUniter\Requester\Application\Obfuscator\KeyGenerator\RandomMaker;
 use PhpUniter\Requester\Application\Obfuscator\ObfuscatorFabric;
 use PhpUniter\Requester\Application\Obfuscator\Preprocessor;
@@ -59,8 +60,9 @@ class Requester
         $placer = new Placer(new UnitTestRepository($this->conf->get('projectDirectory')));
         $keyGenerator = new RandomMaker();
         $pathCorrector = new PathCorrector();
+        $useGenerator = new UseGenerator($this->conf->get('helperClass'));
         $namespaceGenerator = new NamespaceGenerator($this->conf->get('baseNamespace'), $this->conf->get('unitTestsDirectory'), $pathCorrector);
-        $this->phpUnitService = new PhpUnitService($phpUniterIntegration, $placer, $keyGenerator, $namespaceGenerator);
+        $this->phpUnitService = new PhpUnitService($phpUniterIntegration, $placer, $keyGenerator, $namespaceGenerator, $useGenerator);
         $this->preprocessor = new Preprocessor($this->conf->get('preprocess'));
         $this->obfuscatorFabric = new ObfuscatorFabric();
 
