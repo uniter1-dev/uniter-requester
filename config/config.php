@@ -4,7 +4,7 @@
  * You can place your custom package configuration in here.
  */
 
-return [
+$conf = [
     'accessToken'         => 'WLDhA4YMiZM9x8JdpLcEnAYccNgoM2ZbsMtLud5e',
     'baseUrl'             => 'http://uniter1.loc',
     'projectDirectory'    => '/home/sergey/http/requester',
