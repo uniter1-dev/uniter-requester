@@ -16,15 +16,17 @@ use PhpUniter\Requester\Infrastructure\Repository\FakeUnitTestRepository;
 use PhpUniter\Requester\Infrastructure\Request\GenerateClient;
 use PhpUniter\Requester\Infrastructure\Request\GenerateRequest;
 use PhpUniter\Requester\Requester;
+use PhpUniter\Requester\Tests\Unit\UpdateExpected;
 
 class MockTest extends TestCase
 {
+    use UpdateExpected;
     public $container = [];
 
     /**
      * @dataProvider getInputAndExpected
      */
-    public function testCommand($input, $obfExpected, $obfTest, $result)
+    public function testRequesterGenerate($input, $obfExpected, $obfTest, $result)
     {
         $fakeRepository = new FakeUnitTestRepository();
 
@@ -65,11 +67,11 @@ class MockTest extends TestCase
 
         $deObfuscatedTest = $fakeRepository->getFile('FooTest.php');
 
-        self::actualize(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/ObfuscatedClass.php.expected', $requestObfuscatedText);
-        self::actualize(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/Deobfuscated.test.expected', $deObfuscatedTest);
+        self::actualize(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/Obfuscated.test.input', $requestObfuscatedText, true);
+        self::actualize(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/Deobfuscated.test.expected', $deObfuscatedTest, true);
 
-        self::assertEquals($obfExpected, $requestObfuscatedText);
         self::assertEquals(0, $res);
+        self::assertEquals($obfTest, $requestObfuscatedText);
         self::assertEquals($result, $deObfuscatedTest);
     }
 
@@ -92,15 +94,4 @@ class MockTest extends TestCase
         ];
     }
 
-    public static function actualize(string $path, string $actual, $doIt = false): void
-    {
-        if ($doIt) {
-            $done = self::updateExpected($path, $actual);
-        }
-    }
-
-    public static function updateExpected(string $path, string $actual)
-    {
-        return file_put_contents($path, $actual);
-    }
 }
