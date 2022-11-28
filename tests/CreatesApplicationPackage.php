@@ -16,4 +16,9 @@ trait CreatesApplicationPackage
 
         return true;
     }
+
+    public static function getConfig(): array
+    {
+        return require_once __DIR__.'/../config/config.php';
+    }
 }

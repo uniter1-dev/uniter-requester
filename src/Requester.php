@@ -28,7 +28,6 @@ use PhpUniter\Requester\Infrastructure\Request\RegisterRequest;
 
 class Requester
 {
-    public Conf $conf;
     public PhpUnitService $phpUnitService;
     public Preprocessor $preprocessor;
     public ObfuscatorFabric $obfuscatorFabric;
@@ -36,53 +35,20 @@ class Requester
     public PhpUnitUserRegisterService $registerService;
     private PhpUnitTest $phpUnitTest;
 
-    /**
-     * @param Conf   $conf
-     * @param Report $report
-     */
-    public function __construct(?Conf $conf = null, ?Report $report = null)
+
+    public function __construct(PhpUnitUserRegisterService $registerService, PhpUnitService $phpUnitService, Preprocessor $preprocessor)
     {
-        $this->conf = $conf ?? new Conf();
-        $this->report = $report ?? new Report();
-
-        $generateClient = new GenerateClient();
-
-        $generateRequest = new GenerateRequest(
-            'POST',
-            $this->conf->get('baseUrl').$this->conf->get('generationPath'),
-            [
-                'accept'        => ['application/json'],
-                'timeout'       => 2,
-            ],
-            $this->conf->get('accessToken')
-        );
-        $phpUniterIntegration = new PhpUniterIntegration($generateClient, $generateRequest);
-        $placer = new Placer(new UnitTestRepository($this->conf->get('projectDirectory')));
-        $keyGenerator = new RandomMaker();
-        $pathCorrector = new PathCorrector();
-        $useGenerator = new UseGenerator($this->conf->get('helperClass'));
-        $namespaceGenerator = new NamespaceGenerator($this->conf->get('baseNamespace'), $this->conf->get('unitTestsDirectory'), $pathCorrector);
-        $this->phpUnitService = new PhpUnitService($phpUniterIntegration, $placer, $keyGenerator, $namespaceGenerator, $useGenerator);
-        $this->preprocessor = new Preprocessor($this->conf->get('preprocess'));
+        $this->report = new Report();
         $this->obfuscatorFabric = new ObfuscatorFabric();
-
-        $registerRequest = new RegisterRequest(
-            'POST',
-            $this->conf::get('baseUrl').$this->conf::get('registrationPath'),
-            [
-                'accept'        => ['application/json'],
-                'timeout'       => 2,
-            ]
-        );
-
-        $registration = new PhpUniterRegistration($generateClient, $registerRequest);
-        $this->registerService = new PhpUnitUserRegisterService($registration);
+        $this->registerService = $registerService;
+        $this->phpUnitService = $phpUnitService;
+        $this->preprocessor = $preprocessor;
     }
 
-    public function generate($filePath): int
+    public function generate($filePath, $basePath): int
     {
         try {
-            chdir($this->conf::get('basePath'));
+            chdir($basePath);
 
             if (!is_readable($filePath)) {
                 throw new FileNotAccessed("File $filePath was not found");
@@ -110,26 +76,14 @@ class Requester
     /**
      * Execute the console command.
      */
-    public function register(string $email, string $password, ?ValidatorInterface $validator = null): ?int
+    public function register(string $email, string $password): ?int
     {
         try {
-            $validator = $validator ?? new Validator();
-            $validator->setData(['email'    => $email, 'password' => $password]);
-
-            if ($validator->fails()) {
-                throw new ValidationException($validator);
-            }
-
             if ($this->registerService->process($email, $password)) {
                 $this->report->info('User registered. Access token in your email. Put it in .env file - PHP_UNITER_ACCESS_TOKEN');
             }
-        } catch (ValidationException $e) {
-            $this->report->error("Command Validation Error: \n".$this->listMessages($e->errors()));
-
-            return 1;
         } catch (GuzzleException $e) {
             $this->report->error($e->getMessage());
-
             return 1;
         } catch (\Throwable $e) {
             $this->report->error($e->getMessage());
@@ -140,18 +94,6 @@ class Requester
         return 0;
     }
 
-    /**
-     * @param string[][] $messages
-     */
-    public function listMessages(array $messages): string
-    {
-        $res = '';
-        foreach ($messages as $key=>$item) {
-            $res .= $key.' => '.implode(' ', array_values($item))."\n";
-        }
-
-        return $res;
-    }
 
     public function getPhpUnitTest(): PhpUnitTest
     {

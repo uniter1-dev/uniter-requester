@@ -5,7 +5,11 @@ namespace PhpUniter\Requester\Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use PhpUniter\External\Conf;
 use PhpUniter\External\Report;
+use PhpUniter\Requester\Application\Obfuscator\Preprocessor;
+use PhpUniter\Requester\Application\PhpUnitService;
+use PhpUniter\Requester\Application\PhpUnitUserRegisterService;
 use PhpUniter\Requester\Requester;
+use PhpUniter\Requester\RequesterFactory;
 use PhpUniter\Requester\Tests\CreatesApplicationPackage;
 
 /**
@@ -20,28 +24,34 @@ class RegisterLocalTest extends TestCase
     public array $container = [];
     private string $pathToTest;
     private string $projectRoot;
-    private Conf $conf;
+
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->conf = new Conf();
-        $this->pathToTest = (string) $this->conf::get('unitTestsDirectory');
-        $this->projectRoot = $this->conf::get('basePath');
+        $this->conf = self::getConfig();
+        $this->pathToTest = (string) $this->conf['unitTestsDirectory'];
+        $this->projectRoot = $this->conf['basePath'];
         $this->report = new Report();
     }
 
     public function testGenerate()
     {
-        $requester = new Requester($this->conf, $this->report);
-        $code = $requester->generate(__DIR__.'/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input');
+        $registerService = RequesterFactory::registerServiceFactory($this->conf);
+        $phpUnitService = RequesterFactory::generateServiceFactory($this->conf);
+        $preprocessor = new Preprocessor(true);
+        $requester = new Requester($registerService, $phpUnitService, $preprocessor);
+        $code = $requester->generate(__DIR__.'/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input', $this->projectRoot);
 
         self::assertEquals(0, $code);
     }
 
     public function testRegister()
     {
-        $requester = new Requester($this->conf, $this->report);
+        $registerService = RequesterFactory::registerServiceFactory($this->conf);
+        $phpUnitService = RequesterFactory::generateServiceFactory($this->conf);
+        $preprocessor = new Preprocessor(true);
+        $requester = new Requester($registerService, $phpUnitService, $preprocessor);
         $code = $requester->register(
             'a'.uniqid().'@test.ru',
             'NewMockery0',
@@ -49,4 +59,6 @@ class RegisterLocalTest extends TestCase
 
         self::assertEquals(0, $code);
     }
+
+
 }

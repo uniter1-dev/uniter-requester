@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace PhpUniter\Requester;
 
 use Composer\Autoload\ClassLoader;
-use PhpUniter\External\Conf;
 use PhpUniter\Requester\Infrastructure\Exception\ClassNotFound;
 
 /**
@@ -19,7 +18,7 @@ class PhpUnitTestHelper
      *
      * @return string|null Fully qualified proxy class name with namespace or null
      */
-    public static function makeAllMethodsPublic(string $fullyQualifiedClassName): ?string
+    public static function makeAllMethodsPublic(string $fullyQualifiedClassName, $projectDirectory): ?string
     {
         $classNameExploded = explode('\\', $fullyQualifiedClassName);
         $className = array_pop($classNameExploded);
@@ -27,7 +26,7 @@ class PhpUnitTestHelper
         $proxyClassName = "{$className}".uniqid();
 
         try {
-            $proxyClassBody = self::renderProxyClass($fullyQualifiedClassName, $className, $proxyClassName);
+            $proxyClassBody = self::renderProxyClass($fullyQualifiedClassName, $className, $proxyClassName, $projectDirectory);
 
             self::loadClass($proxyClassName, $proxyClassBody);
 
@@ -44,9 +43,9 @@ class PhpUnitTestHelper
      *
      * @psalm-suppress UnresolvableInclude
      */
-    private static function getClassBody(string $fullyQualifiedClassName): string
+    private static function getClassBody(string $fullyQualifiedClassName, $loadPath): string
     {
-        $path = realpath(self::loadPath());
+        $path = realpath($loadPath);
         if ($path) {
             /** @var ClassLoader $loader */
             $loader = require $path;
@@ -88,19 +87,14 @@ class PhpUnitTestHelper
     /**
      * @throws ClassNotFound
      */
-    private static function renderProxyClass(string $fullyQualifiedClassName, string $className, string $proxyClassName): string
+    private static function renderProxyClass(string $fullyQualifiedClassName, string $className, string $proxyClassName, $loadPath): string
     {
-        $classBody = self::getClassBody($fullyQualifiedClassName);
+        $classBody = self::getClassBody($fullyQualifiedClassName, $loadPath);
 
         return preg_replace(
             ["/class\s+{$className}/i", '/(|public|private|protected)\s+(static\s+)?function/i'],
             ["class $proxyClassName", 'public $2function'],
             $classBody
         );
-    }
-
-    private static function loadPath(): string
-    {
-        return (string) Conf::get('projectDirectory') ? (string) Conf::get('projectDirectory').'/vendor/autoload.php' : (__DIR__.'/../../../autoload.php');
     }
 }
