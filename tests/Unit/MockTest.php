@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\Requester\Tests;
+namespace PhpUniter\Requester\Tests\Unit;
 
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -16,7 +16,6 @@ use PhpUniter\Requester\Infrastructure\Repository\FakeUnitTestRepository;
 use PhpUniter\Requester\Infrastructure\Request\GenerateClient;
 use PhpUniter\Requester\Infrastructure\Request\GenerateRequest;
 use PhpUniter\Requester\Requester;
-use PhpUniter\Requester\Tests\Unit\UpdateExpected;
 
 class MockTest extends TestCase
 {
@@ -62,13 +61,13 @@ class MockTest extends TestCase
         $namespaceGenerator = new NamespaceGenerator($requester->conf->get('baseNamespace'), $requester->conf->get('unitTestsDirectory'), $pathCorrector);
         $requester->phpUnitService = new PhpUnitService($phpUniterIntegration, new Placer($fakeRepository), $keyGenerator, $namespaceGenerator);
 
-        $res = $requester->generate(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input');
+        $res = $requester->generate(__DIR__.'/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input');
         $requestObfuscatedText = $requester->getPhpUnitTest()->getObfuscatedUnitTest();
 
         $deObfuscatedTest = $fakeRepository->getFile('FooTest.php');
 
-        self::actualize(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/Obfuscated.test.input', $requestObfuscatedText, true);
-        self::actualize(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/Deobfuscated.test.expected', $deObfuscatedTest, true);
+        self::actualize(__DIR__.'/Application/Obfuscator/Entity/Fixtures/Obfuscated.test.input', $requestObfuscatedText, true);
+        self::actualize(__DIR__.'/Application/Obfuscator/Entity/Fixtures/Deobfuscated.test.expected', $deObfuscatedTest, true);
 
         self::assertEquals(0, $res);
         self::assertEquals($obfTest, $requestObfuscatedText);
@@ -86,10 +85,10 @@ class MockTest extends TestCase
     {
         return [
             [
-                file_get_contents(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input'),
-                file_get_contents(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/ObfuscatedClass.php.expected'),
-                file_get_contents(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/Obfuscated.test.input'),
-                file_get_contents(__DIR__.'/Unit/Application/Obfuscator/Entity/Fixtures/Deobfuscated.test.expected'),
+                file_get_contents(__DIR__.'/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input'),
+                file_get_contents(__DIR__.'/Application/Obfuscator/Entity/Fixtures/ObfuscatedClass.php.expected'),
+                file_get_contents(__DIR__.'/Application/Obfuscator/Entity/Fixtures/Obfuscated.test.input'),
+                file_get_contents(__DIR__.'/Application/Obfuscator/Entity/Fixtures/Deobfuscated.test.expected'),
             ],
         ];
     }

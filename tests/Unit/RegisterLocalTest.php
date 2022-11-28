@@ -1,13 +1,15 @@
 <?php
 
-namespace PhpUniter\Requester\Tests;
+namespace PhpUniter\Requester\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use PhpUniter\External\Conf;
 use PhpUniter\External\Report;
 use PhpUniter\Requester\Requester;
+use PhpUniter\Requester\Tests\CreatesApplicationPackage;
 
 /**
+ * todo: change to remote request test
  * @property Report $report
  */
 class RegisterLocalTest extends TestCase
@@ -31,7 +33,7 @@ class RegisterLocalTest extends TestCase
     public function testGenerate()
     {
         $requester = new Requester($this->conf, $this->report);
-        $code = $requester->generate('src/PhpUnitTestHelper.php');
+        $code = $requester->generate(__DIR__.'/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input');
 
         self::assertEquals(0, $code);
     }
