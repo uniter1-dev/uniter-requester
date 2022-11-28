@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\Requester\Application\Obfuscator\Exception;
+namespace PhpUniter\PhpUniterRequester\Application\Obfuscator\Exception;
 
 class ObfuscationFailed extends \Exception
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\Requester\Application\Generation;
+namespace PhpUniter\PhpUniterRequester\Application\Generation;
 
 class NamespaceGenerator
 {

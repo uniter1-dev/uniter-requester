@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpUniter\Requester\Application;
+namespace PhpUniter\PhpUniterRequester\Application;
 
-use PhpUniter\Requester\Infrastructure\Exception\PhpUnitRegistrationInaccessible;
-use PhpUniter\Requester\Infrastructure\Integrations\PhpUniterRegistration;
+use PhpUniter\PhpUniterRequester\Infrastructure\Exception\PhpUnitRegistrationInaccessible;
+use PhpUniter\PhpUniterRequester\Infrastructure\Integrations\PhpUniterRegistration;
 
 class PhpUnitUserRegisterService
 {
@@ -18,7 +18,7 @@ class PhpUnitUserRegisterService
     /**
      * @throws PhpUnitRegistrationInaccessible
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \PhpUniter\Requester\Infrastructure\Exception\PhpUnitTestInaccessible
+     * @throws \PhpUniter\PhpUniterRequester\Infrastructure\Exception\PhpUnitTestInaccessible
      */
     public function process(string $email, string $password): bool
     {

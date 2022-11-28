@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpUniter\Requester\Infrastructure\Integrations;
+namespace PhpUniter\PhpUniterRequester\Infrastructure\Integrations;
 
-use PhpUniter\Requester\Application\File\Entity\LocalFile;
-use PhpUniter\Requester\Application\PhpUniter\Entity\PhpUnitTest;
-use PhpUniter\Requester\Infrastructure\Exception\PhpUnitRegistrationInaccessible;
-use PhpUniter\Requester\Infrastructure\Exception\PhpUnitTestInaccessible;
-use PhpUniter\Requester\Infrastructure\Request\GenerateClient;
-use PhpUniter\Requester\Infrastructure\Request\GenerateRequest;
+use PhpUniter\PhpUniterRequester\Application\File\Entity\LocalFile;
+use PhpUniter\PhpUniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
+use PhpUniter\PhpUniterRequester\Infrastructure\Exception\PhpUnitRegistrationInaccessible;
+use PhpUniter\PhpUniterRequester\Infrastructure\Exception\PhpUnitTestInaccessible;
+use PhpUniter\PhpUniterRequester\Infrastructure\Request\GenerateClient;
+use PhpUniter\PhpUniterRequester\Infrastructure\Request\GenerateRequest;
 
 class PhpUniterIntegration
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\Requester\Application\Obfuscator\Entity;
+namespace PhpUniter\PhpUniterRequester\Application\Obfuscator\Entity;
 
 class ObfuscateMap
 {

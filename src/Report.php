@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\Requester;
+namespace PhpUniter\PhpUniterRequester;
 
 class Report
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\Requester\Application\File\Exception;
+namespace PhpUniter\PhpUniterRequester\Application\File\Exception;
 
 class CodeTypeWrong extends \Exception
 {

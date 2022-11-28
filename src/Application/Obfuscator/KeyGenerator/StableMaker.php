@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\Requester\Application\Obfuscator\KeyGenerator;
+namespace PhpUniter\PhpUniterRequester\Application\Obfuscator\KeyGenerator;
 
 class StableMaker implements ObfuscateNameMaker
 {

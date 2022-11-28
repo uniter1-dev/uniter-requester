@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpUniter\Requester\Tests\Unit\Application\Obfuscator\Entity;
+namespace PhpUniter\PhpUniterRequester\Tests\Unit\Application\Obfuscator\Entity;
 
 use PHPUnit\Framework\TestCase;
-use PhpUniter\Requester\Application\File\Entity\LocalFile;
-use PhpUniter\Requester\Application\Obfuscator\Entity\ObfuscatedClass;
-use PhpUniter\Requester\Application\Obfuscator\KeyGenerator\StableMaker;
-use PhpUniter\Requester\Application\Obfuscator\Obfuscator;
+use PhpUniter\PhpUniterRequester\Application\File\Entity\LocalFile;
+use PhpUniter\PhpUniterRequester\Application\Obfuscator\Entity\ObfuscatedClass;
+use PhpUniter\PhpUniterRequester\Application\Obfuscator\KeyGenerator\StableMaker;
+use PhpUniter\PhpUniterRequester\Application\Obfuscator\Obfuscator;
 
 class ObfuscatedClassTest extends TestCase
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace PhpUniter\Requester;
+namespace PhpUniter\PhpUniterRequester;
 
 use GuzzleHttp\Exception\GuzzleException;
-use PhpUniter\Requester\Application\File\Exception\FileNotAccessed;
-use PhpUniter\Requester\Application\Obfuscator\ObfuscatorFabric;
-use PhpUniter\Requester\Application\Obfuscator\Preprocessor;
-use PhpUniter\Requester\Application\PhpUniter\Entity\PhpUnitTest;
-use PhpUniter\Requester\Application\PhpUnitService;
-use PhpUniter\Requester\Application\PhpUnitUserRegisterService;
+use PhpUniter\PhpUniterRequester\Application\File\Exception\FileNotAccessed;
+use PhpUniter\PhpUniterRequester\Application\Obfuscator\ObfuscatorFabric;
+use PhpUniter\PhpUniterRequester\Application\Obfuscator\Preprocessor;
+use PhpUniter\PhpUniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
+use PhpUniter\PhpUniterRequester\Application\PhpUnitService;
+use PhpUniter\PhpUniterRequester\Application\PhpUnitUserRegisterService;
 
 class Requester
 {

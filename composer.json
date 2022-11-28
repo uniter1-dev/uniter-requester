@@ -32,13 +32,12 @@
     },
     "autoload": {
         "psr-4": {
-            "PhpUniter\\Requester\\": "src",
-            "PhpUniter\\External\\": "external"
+            "PhpUniter\\PhpUniterRequester\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PhpUniter\\Requester\\Tests\\": "tests"
+            "PhpUniter\\PhpUniterRequester\\Tests\\": "tests"
         }
     },
     "minimum-stability": "dev",

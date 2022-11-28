@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\Requester\Infrastructure\Exception;
+namespace PhpUniter\PhpUniterRequester\Infrastructure\Exception;
 
 class PhpUnitTestInaccessible extends \Exception
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PhpUniter\Requester\Tests\Unit\Application\Helper\Fixtures;
+namespace PhpUniter\PhpUniterRequester\Tests\Unit\Application\Helper\Fixtures;
 
 /**
  * Class MethodAccess.

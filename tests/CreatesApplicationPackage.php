@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\Requester\Tests;
+namespace PhpUniter\PhpUniterRequester\Tests;
 
 trait CreatesApplicationPackage
 {

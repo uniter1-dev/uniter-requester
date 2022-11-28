@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpUniter\Requester\Tests\Unit;
+namespace PhpUniter\PhpUniterRequester\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use PhpUniter\Requester\Application\Obfuscator\Preprocessor;
-use PhpUniter\Requester\Report;
-use PhpUniter\Requester\Requester;
-use PhpUniter\Requester\RequesterFactory;
-use PhpUniter\Requester\Tests\CreatesApplicationPackage;
+use PhpUniter\PhpUniterRequester\Application\Obfuscator\Preprocessor;
+use PhpUniter\PhpUniterRequester\Report;
+use PhpUniter\PhpUniterRequester\Requester;
+use PhpUniter\PhpUniterRequester\RequesterFactory;
+use PhpUniter\PhpUniterRequester\Tests\CreatesApplicationPackage;
 
 /**
  * todo: change to remote request test.

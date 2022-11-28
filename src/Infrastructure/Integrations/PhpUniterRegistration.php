@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpUniter\Requester\Infrastructure\Integrations;
+namespace PhpUniter\PhpUniterRequester\Infrastructure\Integrations;
 
 use GuzzleHttp\Exception\GuzzleException;
-use PhpUniter\Requester\Infrastructure\Exception\PhpUnitRegistrationInaccessible;
-use PhpUniter\Requester\Infrastructure\Request\GenerateClient;
-use PhpUniter\Requester\Infrastructure\Request\RegisterRequest;
+use PhpUniter\PhpUniterRequester\Infrastructure\Exception\PhpUnitRegistrationInaccessible;
+use PhpUniter\PhpUniterRequester\Infrastructure\Request\GenerateClient;
+use PhpUniter\PhpUniterRequester\Infrastructure\Request\RegisterRequest;
 
 class PhpUniterRegistration
 {

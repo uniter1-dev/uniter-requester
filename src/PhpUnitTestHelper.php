@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace PhpUniter\Requester;
+namespace PhpUniter\PhpUniterRequester;
 
 use Composer\Autoload\ClassLoader;
-use PhpUniter\Requester\Infrastructure\Exception\ClassNotFound;
+use PhpUniter\PhpUniterRequester\Infrastructure\Exception\ClassNotFound;
 
 /**
  * Class PhpUnitTestHelper.

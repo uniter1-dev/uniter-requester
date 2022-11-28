@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\Requester\Application\PhpUniter\Exception;
+namespace PhpUniter\PhpUniterRequester\Application\PhpUniter\Exception;
 
 class LocalFileEmpty extends \Exception
 {

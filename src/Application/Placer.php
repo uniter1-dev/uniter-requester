@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpUniter\Requester\Application;
+namespace PhpUniter\PhpUniterRequester\Application;
 
-use PhpUniter\Requester\Application\File\Exception\DirectoryPathWrong;
-use PhpUniter\Requester\Application\File\Exception\FileNotAccessed;
-use PhpUniter\Requester\Application\Generation\Exception\TestNotCreated;
-use PhpUniter\Requester\Application\PhpUniter\Entity\PhpUnitTest;
-use PhpUniter\Requester\Infrastructure\Repository\UnitTestRepositoryInterface;
+use PhpUniter\PhpUniterRequester\Application\File\Exception\DirectoryPathWrong;
+use PhpUniter\PhpUniterRequester\Application\File\Exception\FileNotAccessed;
+use PhpUniter\PhpUniterRequester\Application\Generation\Exception\TestNotCreated;
+use PhpUniter\PhpUniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
+use PhpUniter\PhpUniterRequester\Infrastructure\Repository\UnitTestRepositoryInterface;
 
 class Placer
 {

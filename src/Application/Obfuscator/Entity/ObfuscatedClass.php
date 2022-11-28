@@ -1,12 +1,12 @@
 <?php
 
-namespace PhpUniter\Requester\Application\Obfuscator\Entity;
+namespace PhpUniter\PhpUniterRequester\Application\Obfuscator\Entity;
 
-use PhpUniter\Requester\Application\File\Entity\LocalFile;
-use PhpUniter\Requester\Application\Obfuscator\Exception\ObfuscationFailed;
-use PhpUniter\Requester\Application\Obfuscator\KeyGenerator\ObfuscateNameMaker;
-use PhpUniter\Requester\Application\Obfuscator\Obfuscated;
-use PhpUniter\Requester\Application\Obfuscator\Obfuscator;
+use PhpUniter\PhpUniterRequester\Application\File\Entity\LocalFile;
+use PhpUniter\PhpUniterRequester\Application\Obfuscator\Exception\ObfuscationFailed;
+use PhpUniter\PhpUniterRequester\Application\Obfuscator\KeyGenerator\ObfuscateNameMaker;
+use PhpUniter\PhpUniterRequester\Application\Obfuscator\Obfuscated;
+use PhpUniter\PhpUniterRequester\Application\Obfuscator\Obfuscator;
 
 class ObfuscatedClass implements Obfuscated
 {

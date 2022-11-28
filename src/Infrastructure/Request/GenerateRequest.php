@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\Requester\Infrastructure\Request;
+namespace PhpUniter\PhpUniterRequester\Infrastructure\Request;
 
 use GuzzleHttp\Psr7\Request;
 

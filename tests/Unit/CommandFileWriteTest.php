@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpUniter\Requester\Tests\Unit;
+namespace PhpUniter\PhpUniterRequester\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use PhpUniter\Requester\Tests\CreatesApplicationPackage;
+use PhpUniter\PhpUniterRequester\Tests\CreatesApplicationPackage;
 
 class CommandFileWriteTest extends TestCase
 {
