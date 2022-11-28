@@ -17,7 +17,7 @@ class Preprocessor
             return 0;
         }
 
-        $cmd = 'php vendor/friendsofphp/php-cs-fixer/php-cs-fixer -q fix --config=.php_cs.dist';
+        $cmd = 'php vendor/friendsofphp/php-cs-fixer/php-cs-fixer -q fix --config=.php_cs.dist.php';
         exec("{$cmd} {$filename}", $output, $resultCode);
 
         return $resultCode;
