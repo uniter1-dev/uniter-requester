@@ -4,27 +4,12 @@ namespace PhpUniter\Requester;
 
 use GuzzleHttp\Exception\GuzzleException;
 use PhpUniter\External\Conf;
-use PhpUniter\External\Report;
-use PhpUniter\External\ValidationException;
-use PhpUniter\External\Validator;
-use PhpUniter\External\ValidatorInterface;
 use PhpUniter\Requester\Application\File\Exception\FileNotAccessed;
-use PhpUniter\Requester\Application\Generation\NamespaceGenerator;
-use PhpUniter\Requester\Application\Generation\PathCorrector;
-use PhpUniter\Requester\Application\Generation\UseGenerator;
-use PhpUniter\Requester\Application\Obfuscator\KeyGenerator\RandomMaker;
 use PhpUniter\Requester\Application\Obfuscator\ObfuscatorFabric;
 use PhpUniter\Requester\Application\Obfuscator\Preprocessor;
 use PhpUniter\Requester\Application\PhpUniter\Entity\PhpUnitTest;
 use PhpUniter\Requester\Application\PhpUnitService;
 use PhpUniter\Requester\Application\PhpUnitUserRegisterService;
-use PhpUniter\Requester\Application\Placer;
-use PhpUniter\Requester\Infrastructure\Integrations\PhpUniterIntegration;
-use PhpUniter\Requester\Infrastructure\Integrations\PhpUniterRegistration;
-use PhpUniter\Requester\Infrastructure\Repository\UnitTestRepository;
-use PhpUniter\Requester\Infrastructure\Request\GenerateClient;
-use PhpUniter\Requester\Infrastructure\Request\GenerateRequest;
-use PhpUniter\Requester\Infrastructure\Request\RegisterRequest;
 
 class Requester
 {
@@ -73,9 +58,6 @@ class Requester
         return 0;
     }
 
-    /**
-     * Execute the console command.
-     */
     public function register(string $email, string $password): ?int
     {
         try {

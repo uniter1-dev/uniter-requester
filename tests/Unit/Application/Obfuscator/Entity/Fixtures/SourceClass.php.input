@@ -1,23 +1,23 @@
 <?php
 
 namespace Foo\Bar\Application\Barbar\Entity;
+
 abstract class Foo extends FooBaseClass implements Bar1, Bar2, Bar3
 {
+    public $numbers = ['one', 'two', 'three', 'four', 'five', 'six'];
+    public $v = 0; // comment
+    public $path = 'root'; // comment
 
-    var $numbers = array("one", "two", "three", "four", "five", "six");
-    var $v = 0; // comment
-    public $path = "root"; // comment
+    public const FIRST = 'first';
+    public const SECOND = 0;
+    public const Z = -1;
 
-    const FIRST = 'first';
-    const SECOND = 0;
-    const Z = -1;
-
-    function bar($v,
-                 $w = "a")
+    public function bar($v,
+        $w = 'a')
     {
         $y = $w;
-        $result = foo("arg1",
-            "arg2",
+        $result = foo('arg1',
+            'arg2',
             10);
         switch ($v) {
             case 0:
@@ -30,33 +30,35 @@ abstract class Foo extends FooBaseClass implements Bar1, Bar2, Bar3
             default:
                 $result = 10;
         }
+
         return $result;
     }
 
     public static function fOne(#[Attribute(1, 2)] $argA, $argB, $argC, $argD, $argE, $argF, $argG, $argH)
     {
         $x = $argA + $argB + $argC + $argD + $argE + $argF + $argG + $argH;
-        list($field1, $field2, $field3, $filed4, $field5, $field6) = explode(",", $x);
+        list($field1, $field2, $field3, $filed4, $field5, $field6) = explode(',', $x);
         fTwo($argA, $argB, $argC, fThree($argD, $argE, $argF, $argG, $argH));
-        $z = $argA == "Some string" ? "yes" : "no";
-        $colors = array("red", "green", "blue", "black", "white", "gray");
+        $z = 'Some string' == $argA ? 'yes' : 'no';
+        $colors = ['red', 'green', 'blue', 'black', 'white', 'gray'];
         $count = count($colors);
-        for ($i = 0; $i < $count; $i++) {
+        for ($i = 0; $i < $count; ++$i) {
             $colorString = $colors[$i];
         }
     }
 
-    function fTwo($strA, $strB, $strC, $strD)
+    public function fTwo($strA, $strB, $strC, $strD)
     {
-        if ($strA == "one" || $strB == "two" || $strC == "three") {
+        if ('one' == $strA || 'two' == $strB || 'three' == $strC) {
             return $strA + $strB + $strC;
         }
-        $x = $foo->one("a", "b")->two("c", "d", "e")->three("fg")->four();
+        $x = $foo->one('a', 'b')->two('c', 'd', 'e')->three('fg')->four();
         $y = a()->b()->c();
+
         return $strD;
     }
 
-    function fThree($strA, $strB, $strC, $strD, $strE)
+    public function fThree($strA, $strB, $strC, $strD, $strE)
     {
         try {
         } catch (Exception $e) {
@@ -64,9 +66,9 @@ abstract class Foo extends FooBaseClass implements Bar1, Bar2, Bar3
         } finally {
             // do something
         }
+
         return $strA + $strB + $strC + $strD + $strE;
     }
 
-    protected abstract function fFour();
-
+    abstract protected function fFour();
 }

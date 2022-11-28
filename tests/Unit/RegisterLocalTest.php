@@ -4,10 +4,8 @@ namespace PhpUniter\Requester\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use PhpUniter\External\Conf;
-use PhpUniter\External\Report;
 use PhpUniter\Requester\Application\Obfuscator\Preprocessor;
-use PhpUniter\Requester\Application\PhpUnitService;
-use PhpUniter\Requester\Application\PhpUnitUserRegisterService;
+use PhpUniter\Requester\Report;
 use PhpUniter\Requester\Requester;
 use PhpUniter\Requester\RequesterFactory;
 use PhpUniter\Requester\Tests\CreatesApplicationPackage;
