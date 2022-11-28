@@ -15,8 +15,9 @@ class Requester
     public PhpUnitService $phpUnitService;
     public Preprocessor $preprocessor;
     public ObfuscatorFabric $obfuscatorFabric;
-    public Report $report;
     public PhpUnitUserRegisterService $registerService;
+
+    private Report $report;
     private PhpUnitTest $phpUnitTest;
     private string $basePath;
 
@@ -80,5 +81,13 @@ class Requester
     public function getPhpUnitTest(): PhpUnitTest
     {
         return $this->phpUnitTest;
+    }
+
+    /**
+     * @return Report
+     */
+    public function getReport(): Report
+    {
+        return $this->report;
     }
 }
