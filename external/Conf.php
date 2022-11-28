@@ -12,7 +12,7 @@ class Conf
         'obfuscate'           => false,
         'unitTestBaseClass'   => 'PHPUnit\Framework\TestCase',
         'unitTestsDirectory'  => 'tests/Resulted',
-        'baseNamespace'       => 'Tests\Unit',
+        'baseNamespace'       => 'PhpUniter\Requester\Tests\Resulted',
         'basePath'            => '/home/sergey/http/requester',
         'registrationPath'    => '/api/v1/registration/access-token',
         'generationPath'      => '/api/v1/generator/generate',

@@ -1,8 +1,7 @@
 <?php
-namespace Tests\Unit\Foo\Bar\Application\Barbar\Entity;
+namespace PhpUniter\Requester\Tests\Resulted\Foo\Bar\Application\Barbar\Entity;
 
 use Mockery;
-use PhpUniter\PackageLaravel\PhpUnitTestHelper;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 class FooTest extends MockeryTestCase
 {

@@ -1,7 +1,6 @@
 <?php
 
 use Mockery;
-use PhpUniter\PackageLaravel\PhpUnitTestHelper;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 class _obf373839Test extends MockeryTestCase
 {
