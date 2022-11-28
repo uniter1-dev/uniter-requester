@@ -23,6 +23,7 @@ class PhpUniterIntegration
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws PhpUnitRegistrationInaccessible
+     * @throws PhpUnitTestInaccessible
      */
     public function generatePhpUnitTest(LocalFile $localFile): PhpUnitTest
     {

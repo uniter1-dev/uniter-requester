@@ -3,7 +3,6 @@
 namespace PhpUniter\Requester;
 
 use GuzzleHttp\Exception\GuzzleException;
-use PhpUniter\External\Conf;
 use PhpUniter\Requester\Application\File\Exception\FileNotAccessed;
 use PhpUniter\Requester\Application\Obfuscator\ObfuscatorFabric;
 use PhpUniter\Requester\Application\Obfuscator\Preprocessor;
@@ -19,21 +18,22 @@ class Requester
     public Report $report;
     public PhpUnitUserRegisterService $registerService;
     private PhpUnitTest $phpUnitTest;
+    private string $basePath;
 
-
-    public function __construct(PhpUnitUserRegisterService $registerService, PhpUnitService $phpUnitService, Preprocessor $preprocessor)
+    public function __construct(PhpUnitUserRegisterService $registerService, PhpUnitService $phpUnitService, Preprocessor $preprocessor, string $basePath)
     {
         $this->report = new Report();
         $this->obfuscatorFabric = new ObfuscatorFabric();
         $this->registerService = $registerService;
         $this->phpUnitService = $phpUnitService;
         $this->preprocessor = $preprocessor;
+        $this->basePath = $basePath;
     }
 
-    public function generate($filePath, $basePath): int
+    public function generate(string $filePath): int
     {
         try {
-            chdir($basePath);
+            chdir($this->basePath);
 
             if (!is_readable($filePath)) {
                 throw new FileNotAccessed("File $filePath was not found");
@@ -66,6 +66,7 @@ class Requester
             }
         } catch (GuzzleException $e) {
             $this->report->error($e->getMessage());
+
             return 1;
         } catch (\Throwable $e) {
             $this->report->error($e->getMessage());
@@ -75,7 +76,6 @@ class Requester
 
         return 0;
     }
-
 
     public function getPhpUnitTest(): PhpUnitTest
     {

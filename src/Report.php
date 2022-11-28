@@ -17,17 +17,11 @@ class Report
         $this->errors[] = $message;
     }
 
-    /**
-     * @return array
-     */
     public function getInfos(): array
     {
         return $this->infos;
     }
 
-    /**
-     * @return array
-     */
     public function getErrors(): array
     {
         return $this->errors;
