@@ -1,0 +1,8 @@
+vendor
+.idea
+composer.phar
+.php_cs.cache
+.phpunit.cache
+.php-cs-fixer.dist.php
+.php-cs-fixer.cache
+tests/Resulted
