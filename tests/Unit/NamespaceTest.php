@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Tests\Unit;
+namespace Uniter1\UniterRequester\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use PhpUniter\PhpUniterRequester\Application\Generation\NamespaceGenerator;
-use PhpUniter\PhpUniterRequester\Tests\CreatesApplicationPackage;
+use Uniter1\UniterRequester\Application\Generation\NamespaceGenerator;
+use Uniter1\UniterRequester\Tests\CreatesApplicationPackage;
 
 class NamespaceTest extends TestCase
 {
@@ -18,7 +18,7 @@ class NamespaceTest extends TestCase
     public function testFindNamespace($input): void
     {
         $namespace = NamespaceGenerator::findNamespace($input);
-        self::assertEquals('PhpUniter\PhpUniterRequester\Tests\Unit', $namespace);
+        self::assertEquals('Uniter1\UniterRequester\Tests\Unit', $namespace);
     }
 
     public function getCases(): array

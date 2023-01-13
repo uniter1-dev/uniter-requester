@@ -1,11 +1,11 @@
 {
-    "name": "php-uniter/php-uniter-requester",
+    "name": "uniter1/uniter-requester",
     "description": "PhpUniter integration package. Assistant for automatic test generation. Commands for registration user and for sending yours class to generate test for it. Class for converting all methods to public on load",
     "keywords": [
-        "php-uniter",
-        "php-uniter-requester"
+        "uniter1",
+        "uniter-requester"
     ],
-    "homepage": "https://github.com/php-uniter/php-uniter-requester.git",
+    "homepage": "https://github.com/uniter1/uniter-requester.git",
     "license": "MIT",
     "type": "library",
     "authors": [
@@ -31,12 +31,12 @@
     },
     "autoload": {
         "psr-4": {
-            "PhpUniter\\PhpUniterRequester\\": "src"
+            "Uniter1\\UniterRequester\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PhpUniter\\PhpUniterRequester\\Tests\\": "tests"
+            "Uniter1\\UniterRequester\\Tests\\": "tests"
         }
     },
     "minimum-stability": "dev",

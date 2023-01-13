@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Application\File\Entity;
+namespace Uniter1\UniterRequester\Application\File\Entity;
 
 class LocalFile
 {

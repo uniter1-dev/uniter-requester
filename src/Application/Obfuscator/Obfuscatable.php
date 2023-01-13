@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Application\Obfuscator;
+namespace Uniter1\UniterRequester\Application\Obfuscator;
 
 interface Obfuscatable
 {

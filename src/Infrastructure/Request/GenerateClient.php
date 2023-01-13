@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Infrastructure\Request;
+namespace Uniter1\UniterRequester\Infrastructure\Request;
 
 use GuzzleHttp\Client;
 

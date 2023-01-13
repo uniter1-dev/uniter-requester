@@ -1,6 +1,6 @@
 <?php
-namespace PhpUniter\PhpUniterRequester\Tests\Resulted\Foo\Bar\Application\Barbar\Entity;
-use PhpUniter\PhpUniterRequester\PhpUnitTestHelper;
+namespace Uniter1\UniterRequester\Tests\Resulted\Foo\Bar\Application\Barbar\Entity;
+use Uniter1\UniterRequester\PhpUnitTestHelper;
 
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;

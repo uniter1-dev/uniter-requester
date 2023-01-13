@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Infrastructure\Repository;
+namespace Uniter1\UniterRequester\Infrastructure\Repository;
 
-use PhpUniter\PhpUniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
+use Uniter1\UniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
 
 interface UnitTestRepositoryInterface
 {

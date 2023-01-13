@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Application\Generation;
+namespace Uniter1\UniterRequester\Application\Generation;
 
 class UseGenerator
 {

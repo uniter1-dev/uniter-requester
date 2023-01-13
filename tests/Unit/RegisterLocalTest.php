@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Tests\Unit;
+namespace Uniter1\UniterRequester\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use PhpUniter\PhpUniterRequester\Application\Obfuscator\Preprocessor;
-use PhpUniter\PhpUniterRequester\Report;
-use PhpUniter\PhpUniterRequester\Requester;
-use PhpUniter\PhpUniterRequester\RequesterFactory;
-use PhpUniter\PhpUniterRequester\Tests\CreatesApplicationPackage;
+use Uniter1\UniterRequester\Application\Obfuscator\Preprocessor;
+use Uniter1\UniterRequester\Report;
+use Uniter1\UniterRequester\Requester;
+use Uniter1\UniterRequester\RequesterFactory;
+use Uniter1\UniterRequester\Tests\CreatesApplicationPackage;
 
 /**
  * todo: change to remote request test.
@@ -36,7 +36,7 @@ class RegisterLocalTest extends TestCase
         $registerService = RequesterFactory::registerServiceFactory($this->conf);
         $phpUnitService = RequesterFactory::generateServiceFactory($this->conf);
         $preprocessor = new Preprocessor(true);
-        $requester = new Requester($registerService, $phpUnitService, $preprocessor, $this->projectRoot);
+        $requester = new Requester($registerService, $phpUnitService, $this->projectRoot);
         $code = $requester->generate(__DIR__.'/Application/Obfuscator/Entity/Fixtures/SourceClass.php.input', $this->projectRoot);
 
         self::assertEquals(0, $code);
@@ -47,7 +47,7 @@ class RegisterLocalTest extends TestCase
         $registerService = RequesterFactory::registerServiceFactory($this->conf);
         $phpUnitService = RequesterFactory::generateServiceFactory($this->conf);
         $preprocessor = new Preprocessor(true);
-        $requester = new Requester($registerService, $phpUnitService, $preprocessor, $this->projectRoot);
+        $requester = new Requester($registerService, $phpUnitService, $this->projectRoot);
         $code = $requester->register(
             'a'.uniqid().'@test.ru',
             'NewMockery0',

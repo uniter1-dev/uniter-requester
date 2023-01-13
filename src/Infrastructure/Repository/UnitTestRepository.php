@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Infrastructure\Repository;
+namespace Uniter1\UniterRequester\Infrastructure\Repository;
 
-use PhpUniter\PhpUniterRequester\Application\File\Exception\DirectoryPathWrong;
-use PhpUniter\PhpUniterRequester\Application\File\Exception\FileNotAccessed;
-use PhpUniter\PhpUniterRequester\Application\Generation\Exception\TestNotCreated;
-use PhpUniter\PhpUniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
+use Uniter1\UniterRequester\Application\File\Exception\DirectoryPathWrong;
+use Uniter1\UniterRequester\Application\File\Exception\FileNotAccessed;
+use Uniter1\UniterRequester\Application\Generation\Exception\TestNotCreated;
+use Uniter1\UniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
 
 class UnitTestRepository implements UnitTestRepositoryInterface
 {

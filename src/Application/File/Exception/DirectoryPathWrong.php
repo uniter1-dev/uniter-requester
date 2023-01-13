@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Application\File\Exception;
+namespace Uniter1\UniterRequester\Application\File\Exception;
 
 class DirectoryPathWrong extends \Exception
 {

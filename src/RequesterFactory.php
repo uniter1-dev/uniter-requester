@@ -1,20 +1,20 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester;
+namespace Uniter1\UniterRequester;
 
-use PhpUniter\PhpUniterRequester\Application\Generation\NamespaceGenerator;
-use PhpUniter\PhpUniterRequester\Application\Generation\PathCorrector;
-use PhpUniter\PhpUniterRequester\Application\Generation\UseGenerator;
-use PhpUniter\PhpUniterRequester\Application\Obfuscator\KeyGenerator\RandomMaker;
-use PhpUniter\PhpUniterRequester\Application\PhpUnitService;
-use PhpUniter\PhpUniterRequester\Application\PhpUnitUserRegisterService;
-use PhpUniter\PhpUniterRequester\Application\Placer;
-use PhpUniter\PhpUniterRequester\Infrastructure\Integrations\PhpUniterIntegration;
-use PhpUniter\PhpUniterRequester\Infrastructure\Integrations\PhpUniterRegistration;
-use PhpUniter\PhpUniterRequester\Infrastructure\Repository\UnitTestRepository;
-use PhpUniter\PhpUniterRequester\Infrastructure\Request\GenerateClient;
-use PhpUniter\PhpUniterRequester\Infrastructure\Request\GenerateRequest;
-use PhpUniter\PhpUniterRequester\Infrastructure\Request\RegisterRequest;
+use Uniter1\UniterRequester\Application\Generation\NamespaceGenerator;
+use Uniter1\UniterRequester\Application\Generation\PathCorrector;
+use Uniter1\UniterRequester\Application\Generation\UseGenerator;
+use Uniter1\UniterRequester\Application\Obfuscator\KeyGenerator\RandomMaker;
+use Uniter1\UniterRequester\Application\PhpUnitService;
+use Uniter1\UniterRequester\Application\PhpUnitUserRegisterService;
+use Uniter1\UniterRequester\Application\Placer;
+use Uniter1\UniterRequester\Infrastructure\Integrations\PhpUniterIntegration;
+use Uniter1\UniterRequester\Infrastructure\Integrations\PhpUniterRegistration;
+use Uniter1\UniterRequester\Infrastructure\Repository\UnitTestRepository;
+use Uniter1\UniterRequester\Infrastructure\Request\GenerateClient;
+use Uniter1\UniterRequester\Infrastructure\Request\GenerateRequest;
+use Uniter1\UniterRequester\Infrastructure\Request\RegisterRequest;
 
 class RequesterFactory
 {

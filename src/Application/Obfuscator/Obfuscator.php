@@ -1,10 +1,10 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Application\Obfuscator;
+namespace Uniter1\UniterRequester\Application\Obfuscator;
 
-use PhpUniter\PhpUniterRequester\Application\File\Entity\LocalFile;
-use PhpUniter\PhpUniterRequester\Application\Obfuscator\Entity\ObfuscateMap;
-use PhpUniter\PhpUniterRequester\Application\Obfuscator\Exception\ObfuscationFailed;
+use Uniter1\UniterRequester\Application\File\Entity\LocalFile;
+use Uniter1\UniterRequester\Application\Obfuscator\Entity\ObfuscateMap;
+use Uniter1\UniterRequester\Application\Obfuscator\Exception\ObfuscationFailed;
 
 class Obfuscator
 {

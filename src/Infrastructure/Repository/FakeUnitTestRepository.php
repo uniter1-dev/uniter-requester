@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Infrastructure\Repository;
+namespace Uniter1\UniterRequester\Infrastructure\Repository;
 
-use PhpUniter\PhpUniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
+use Uniter1\UniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
 
 class FakeUnitTestRepository implements UnitTestRepositoryInterface
 {
@@ -18,5 +18,10 @@ class FakeUnitTestRepository implements UnitTestRepositoryInterface
     public function getFile(string $className): string
     {
         return $this->files[$className];
+    }
+
+    public function list(): array
+    {
+        return array_keys($this->files);
     }
 }

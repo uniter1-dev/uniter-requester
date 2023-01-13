@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Application\Obfuscator\KeyGenerator;
+namespace Uniter1\UniterRequester\Application\Obfuscator\KeyGenerator;
 
 interface ObfuscateNameMaker
 {

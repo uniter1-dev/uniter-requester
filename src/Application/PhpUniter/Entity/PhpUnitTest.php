@@ -1,8 +1,8 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Application\PhpUniter\Entity;
+namespace Uniter1\UniterRequester\Application\PhpUniter\Entity;
 
-use PhpUniter\PhpUniterRequester\Application\File\Entity\LocalFile;
+use Uniter1\UniterRequester\Application\File\Entity\LocalFile;
 
 class PhpUnitTest
 {

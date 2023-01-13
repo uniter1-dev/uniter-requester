@@ -1,19 +1,19 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Application;
+namespace Uniter1\UniterRequester\Application;
 
-use PhpUniter\PhpUniterRequester\Application\File\Entity\LocalFile;
-use PhpUniter\PhpUniterRequester\Application\File\Exception\ObfucsatorNull;
-use PhpUniter\PhpUniterRequester\Application\Generation\Exception\TestNotCreated;
-use PhpUniter\PhpUniterRequester\Application\Generation\NamespaceGenerator;
-use PhpUniter\PhpUniterRequester\Application\Generation\UseGenerator;
-use PhpUniter\PhpUniterRequester\Application\Obfuscator\Entity\ObfuscatedClass;
-use PhpUniter\PhpUniterRequester\Application\Obfuscator\KeyGenerator\ObfuscateNameMaker;
-use PhpUniter\PhpUniterRequester\Application\Obfuscator\ObfuscatorFabric;
-use PhpUniter\PhpUniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
-use PhpUniter\PhpUniterRequester\Application\PhpUniter\Exception\GeneratedTestEmpty;
-use PhpUniter\PhpUniterRequester\Application\PhpUniter\Exception\LocalFileEmpty;
-use PhpUniter\PhpUniterRequester\Infrastructure\Integrations\PhpUniterIntegration;
+use Uniter1\UniterRequester\Application\File\Entity\LocalFile;
+use Uniter1\UniterRequester\Application\File\Exception\ObfucsatorNull;
+use Uniter1\UniterRequester\Application\Generation\Exception\TestNotCreated;
+use Uniter1\UniterRequester\Application\Generation\NamespaceGenerator;
+use Uniter1\UniterRequester\Application\Generation\UseGenerator;
+use Uniter1\UniterRequester\Application\Obfuscator\Entity\ObfuscatedClass;
+use Uniter1\UniterRequester\Application\Obfuscator\KeyGenerator\ObfuscateNameMaker;
+use Uniter1\UniterRequester\Application\Obfuscator\ObfuscatorFabric;
+use Uniter1\UniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
+use Uniter1\UniterRequester\Application\PhpUniter\Exception\GeneratedTestEmpty;
+use Uniter1\UniterRequester\Application\PhpUniter\Exception\LocalFileEmpty;
+use Uniter1\UniterRequester\Infrastructure\Integrations\PhpUniterIntegration;
 
 class PhpUnitService
 {
@@ -44,9 +44,9 @@ class PhpUnitService
      * @throws File\Exception\DirectoryPathWrong
      * @throws File\Exception\FileNotAccessed
      * @throws TestNotCreated
-     * @throws \PhpUniter\PhpUniterRequester\Application\Obfuscator\Exception\ObfuscationFailed
+     * @throws \Uniter1\UniterRequester\Application\Obfuscator\Exception\ObfuscationFailed
      * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \PhpUniter\PhpUniterRequester\Infrastructure\Exception\PhpUnitTestInaccessible
+     * @throws \Uniter1\UniterRequester\Infrastructure\Exception\PhpUnitTestInaccessible
      * @throws GeneratedTestEmpty
      * @throws ObfucsatorNull
      * @throws LocalFileEmpty

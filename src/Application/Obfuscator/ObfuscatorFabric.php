@@ -1,11 +1,11 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Application\Obfuscator;
+namespace Uniter1\UniterRequester\Application\Obfuscator;
 
-use PhpUniter\PhpUniterRequester\Application\File\Entity\LocalFile;
-use PhpUniter\PhpUniterRequester\Application\File\Exception\CodeTypeWrong;
-use PhpUniter\PhpUniterRequester\Application\Obfuscator\Entity\ObfuscatedClass;
-use PhpUniter\PhpUniterRequester\Application\Obfuscator\KeyGenerator\ObfuscateNameMaker;
+use Uniter1\UniterRequester\Application\File\Entity\LocalFile;
+use Uniter1\UniterRequester\Application\File\Exception\CodeTypeWrong;
+use Uniter1\UniterRequester\Application\Obfuscator\Entity\ObfuscatedClass;
+use Uniter1\UniterRequester\Application\Obfuscator\KeyGenerator\ObfuscateNameMaker;
 
 class ObfuscatorFabric
 {

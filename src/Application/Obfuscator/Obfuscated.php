@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester\Application\Obfuscator;
+namespace Uniter1\UniterRequester\Application\Obfuscator;
 
-use PhpUniter\PhpUniterRequester\Application\File\Entity\LocalFile;
-use PhpUniter\PhpUniterRequester\Application\Obfuscator\KeyGenerator\ObfuscateNameMaker;
+use Uniter1\UniterRequester\Application\File\Entity\LocalFile;
+use Uniter1\UniterRequester\Application\Obfuscator\KeyGenerator\ObfuscateNameMaker;
 
 interface Obfuscated
 {

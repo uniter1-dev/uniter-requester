@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpUniter\PhpUniterRequester;
+namespace Uniter1\UniterRequester;
 
 use GuzzleHttp\Exception\GuzzleException;
-use PhpUniter\PhpUniterRequester\Application\File\Exception\FileNotAccessed;
-use PhpUniter\PhpUniterRequester\Application\Obfuscator\ObfuscatorFabric;
-use PhpUniter\PhpUniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
-use PhpUniter\PhpUniterRequester\Application\PhpUnitService;
-use PhpUniter\PhpUniterRequester\Application\PhpUnitUserRegisterService;
+use Uniter1\UniterRequester\Application\File\Exception\FileNotAccessed;
+use Uniter1\UniterRequester\Application\Obfuscator\ObfuscatorFabric;
+use Uniter1\UniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
+use Uniter1\UniterRequester\Application\PhpUnitService;
+use Uniter1\UniterRequester\Application\PhpUnitUserRegisterService;
 
 class Requester
 {
@@ -59,7 +59,7 @@ class Requester
     {
         try {
             if ($this->registerService->process($email, $password)) {
-                $this->report->info('User registered. Access token in your email. Put it in .env file - PHP_UNITER_ACCESS_TOKEN');
+                $this->report->info('User registered. Access token in your email. Put it in .env file - UNITER1_ACCESS_TOKEN');
             }
         } catch (GuzzleException $e) {
             $this->report->error($e->getMessage());
@@ -79,9 +79,6 @@ class Requester
         return $this->phpUnitTest;
     }
 
-    /**
-     * @return Report
-     */
     public function getReport(): Report
     {
         return $this->report;
