@@ -5,7 +5,7 @@
         "uniter1",
         "uniter-requester"
     ],
-    "homepage": "https://github.com/uniter1/uniter-requester.git",
+    "homepage": "https://github.com/uniter1-dev/uniter-requester",
     "license": "MIT",
     "type": "library",
     "authors": [
