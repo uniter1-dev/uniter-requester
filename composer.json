@@ -1,6 +1,6 @@
 {
     "name": "uniter1/uniter-requester",
-    "description": "PhpUniter integration package. Assistant for automatic test generation. Commands for registration user and for sending yours class to generate test for it. Class for converting all methods to public on load",
+    "description": "Uniter1 integration package. Assistant for automatic test generation. Commands for registration user and for sending yours class to generate test for it. Class for converting all methods to public on load",
     "keywords": [
         "uniter1",
         "uniter-requester"
