@@ -59,6 +59,7 @@ class Obfuscator
 
         foreach ($map->getMapType($map::METHODS) as $methodPair) {
             $deObfuscated = $this->deReplace($methodPair, $deObfuscated);
+            $deObfuscated = $this->deReplaceCaps($methodPair, $deObfuscated);
         }
         foreach ($map->getMapType($map::CONSTANTS) as $methodPair) {
             $deObfuscated = $this->deReplace($methodPair, $deObfuscated);
@@ -91,5 +92,16 @@ class Obfuscator
         }
 
         return str_replace($one, $two, $deObfuscated);
+    }
+
+    private function deReplaceCaps(array $methodPair, string $deObfuscated): string
+    {
+        $one = $methodPair[0] ?? null;
+        $two = $methodPair[1] ?? null;
+        if (is_null($one) || is_null($two)) {
+            throw new ObfuscationFailed('Wrong map structure');
+        }
+
+        return str_replace(ucfirst($one), ucfirst($two), $deObfuscated);
     }
 }

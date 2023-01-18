@@ -30,7 +30,7 @@ class UseGenerator
 
     public function addUse(string $use, string $code): string
     {
-        $replace = '<?php'."\n".$use."\n";
+        $replace = '<?php'."\n\n".$use;
 
         return str_replace("<?php\n", $replace, $code);
     }

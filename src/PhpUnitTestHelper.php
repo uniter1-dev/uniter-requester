@@ -18,7 +18,7 @@ class PhpUnitTestHelper
      *
      * @return string|null Fully qualified proxy class name with namespace or null
      */
-    public static function makeAllMethodsPublic(string $fullyQualifiedClassName, $projectDirectory): ?string
+    public static function makeAllMethodsPublic(string $fullyQualifiedClassName): ?string
     {
         $classNameExploded = explode('\\', $fullyQualifiedClassName);
         $className = array_pop($classNameExploded);
@@ -26,7 +26,7 @@ class PhpUnitTestHelper
         $proxyClassName = "{$className}".uniqid();
 
         try {
-            $proxyClassBody = self::renderProxyClass($fullyQualifiedClassName, $className, $proxyClassName, $projectDirectory);
+            $proxyClassBody = self::renderProxyClass($fullyQualifiedClassName, $className, $proxyClassName);
 
             self::loadClass($proxyClassName, $proxyClassBody);
 
@@ -43,17 +43,15 @@ class PhpUnitTestHelper
      *
      * @psalm-suppress UnresolvableInclude
      */
-    private static function getClassBody(string $fullyQualifiedClassName, $loadPath): string
+    private static function getClassBody(string $fullyQualifiedClassName): string
     {
-        $path = realpath($loadPath);
-        if ($path) {
-            /** @var ClassLoader $loader */
-            $loader = require $path;
+        /** @var ClassLoader $loader */
+        $loaders = ClassLoader::getRegisteredLoaders();
+        $loader = current($loaders);
 
-            if ($classFilePath = $loader->findFile($fullyQualifiedClassName)) {
-                if ($classBody = file_get_contents($classFilePath)) {
-                    return $classBody;
-                }
+        if ($classFilePath = $loader->findFile($fullyQualifiedClassName)) {
+            if ($classBody = file_get_contents($classFilePath)) {
+                return $classBody;
             }
         }
 
@@ -87,9 +85,9 @@ class PhpUnitTestHelper
     /**
      * @throws ClassNotFound
      */
-    private static function renderProxyClass(string $fullyQualifiedClassName, string $className, string $proxyClassName, $loadPath): string
+    private static function renderProxyClass(string $fullyQualifiedClassName, string $className, string $proxyClassName): string
     {
-        $classBody = self::getClassBody($fullyQualifiedClassName, $loadPath);
+        $classBody = self::getClassBody($fullyQualifiedClassName);
 
         return preg_replace(
             ["/class\s+{$className}/i", '/(|public|private|protected)\s+(static\s+)?function/i'],

@@ -43,7 +43,7 @@ class NamespaceGenerator
 
     public function addNamespace(string $code, string $namespace): string
     {
-        $replace = '<?php'."\n".$namespace."\n";
+        $replace = '<?php'."\n\n".$namespace."\n";
 
         return str_replace("<?php\n", $replace, $code);
     }
