@@ -20,9 +20,12 @@ class PhpUnitService
     public Placer $testPlacer;
     private PhpUniterIntegration $integration;
     private ObfuscateNameMaker $keyGenerator;
-    private bool $toObfuscate;
     private NamespaceGenerator $namespaceGenerator;
     private UseGenerator $useGenerator;
+
+    private bool $toObfuscate;
+    private bool $inspectorMode;
+    private bool $useDependent;
 
     public function __construct(
         PhpUniterIntegration $phpUniterIntegration,
@@ -30,12 +33,14 @@ class PhpUnitService
         ObfuscateNameMaker $keyGenerator,
         NamespaceGenerator $namespaceGenerator,
         UseGenerator $useGenerator,
-        bool $toObfuscate = true
+        array $options = []
     ) {
         $this->integration = $phpUniterIntegration;
         $this->testPlacer = $testPlacer;
         $this->keyGenerator = $keyGenerator;
-        $this->toObfuscate = $toObfuscate;
+        $this->toObfuscate = $options['toObfuscate'] ?? true;
+        $this->inspectorMode = $options['inspectorMode'] ?? true;
+        $this->useDependent = $options['useDependent'] ?? true;
         $this->namespaceGenerator = $namespaceGenerator;
         $this->useGenerator = $useGenerator;
     }
@@ -50,6 +55,7 @@ class PhpUnitService
      * @throws GeneratedTestEmpty
      * @throws ObfucsatorNull
      * @throws LocalFileEmpty
+     * @throws \Uniter1\UniterRequester\Infrastructure\Exception\PhpUnitRegistrationInaccessible
      */
     public function process(LocalFile $classFile, ObfuscatorFabric $obfuscatorFabric): PhpUnitTest
     {
@@ -65,13 +71,13 @@ class PhpUnitService
             /** @var LocalFile $obfuscatedSourceFile */
             /** @var ObfuscatedClass $obfuscator */
             $obfuscatedSourceFile = $obfuscator->makeObfuscated();
-            $phpUnitTest = $this->integration->generatePhpUnitTest($obfuscatedSourceFile);
+            $phpUnitTest = $this->integration->generatePhpUnitTest($obfuscatedSourceFile, $this->inspectorMode, $this->useDependent);
             $testObfuscatedGenerated = $phpUnitTest->getObfuscatedUnitTest();
 
             $deObfuscated = $obfuscator->deObfuscate($testObfuscatedGenerated);
             $phpUnitTest->setFinalUnitTest($deObfuscated);
         } else {
-            $phpUnitTest = $this->integration->generatePhpUnitTest($classFile);
+            $phpUnitTest = $this->integration->generatePhpUnitTest($classFile, $this->inspectorMode, $this->useDependent);
             $phpUnitTest->setFinalUnitTest($phpUnitTest->getObfuscatedUnitTest());
         }
 

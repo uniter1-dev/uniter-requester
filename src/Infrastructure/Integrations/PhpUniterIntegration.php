@@ -25,7 +25,7 @@ class PhpUniterIntegration
      * @throws PhpUnitRegistrationInaccessible
      * @throws PhpUnitTestInaccessible
      */
-    public function generatePhpUnitTest(LocalFile $localFile): PhpUnitTest
+    public function generatePhpUnitTest(LocalFile $localFile, bool $inspectorMode, bool $useDependent): PhpUnitTest
     {
         $response = $this->client->send(
             $this->generateRequest,
@@ -33,6 +33,8 @@ class PhpUniterIntegration
                 'json' => [
                     'class'          => $localFile->getFileBody(),
                     'access_token'   => $this->generateRequest->getToken(),
+                    'inspector_mode' => $inspectorMode,
+                    'use_dependent'  => $useDependent,
                 ],
             ]
         );
