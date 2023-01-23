@@ -54,7 +54,12 @@ class RequesterFactory
         $pathCorrector = new PathCorrector();
         $useGenerator = new UseGenerator($config['helperClass']);
         $namespaceGenerator = new NamespaceGenerator($config['baseNamespace'], $config['unitTestsDirectory'], $pathCorrector);
+        $options = [
+            'toObfuscate'   => $config['obfuscate'],
+            'inspectorMode' => $config['inspectorMode'],
+            'useDependent'  => $config['useDependent'],
+        ];
 
-        return new PhpUnitService($phpUniterIntegration, $placer, $keyGenerator, $namespaceGenerator, $useGenerator);
+        return new PhpUnitService($phpUniterIntegration, $placer, $keyGenerator, $namespaceGenerator, $useGenerator, $options);
     }
 }
