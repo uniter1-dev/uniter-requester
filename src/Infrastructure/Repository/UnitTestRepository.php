@@ -6,6 +6,7 @@ use Uniter1\UniterRequester\Application\File\Exception\DirectoryPathWrong;
 use Uniter1\UniterRequester\Application\File\Exception\FileNotAccessed;
 use Uniter1\UniterRequester\Application\Generation\Exception\TestNotCreated;
 use Uniter1\UniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
+use Uniter1\UniterRequester\Infrastructure\Exception\FileNotFound;
 
 class UnitTestRepository implements UnitTestRepositoryInterface
 {
@@ -52,9 +53,16 @@ class UnitTestRepository implements UnitTestRepositoryInterface
         throw new FileNotAccessed("File $pathToTest was not saved");
     }
 
+    /**
+     * @throws FileNotFound
+     */
     public function getOne(string $relativePath, string $className): string
     {
         $pathToTest = $this->projectRoot.'/'.$relativePath.'/'.$className;
+
+        if (!file_exists($pathToTest)) {
+            throw new FileNotFound("File $pathToTest do not exists");
+        }
 
         return file_get_contents($pathToTest);
     }
