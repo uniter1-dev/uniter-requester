@@ -28,4 +28,9 @@ class Placer
     {
         return $this->repository->saveOne($phpUnitTest, $relativePath, $className);
     }
+
+    public function getOldTest(string $relativePath, string $className): string
+    {
+        return $this->repository->getOne($relativePath, $className);
+    }
 }

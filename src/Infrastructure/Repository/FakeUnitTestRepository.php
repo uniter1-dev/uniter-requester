@@ -15,6 +15,18 @@ class FakeUnitTestRepository implements UnitTestRepositoryInterface
         return strlen($this->files[$className]);
     }
 
+    public function save(string $text, string $className): int
+    {
+        $this->files[$className] = $text;
+
+        return strlen($this->files[$className]);
+    }
+
+    public function getOne(string $relativePath, string $className): string
+    {
+        return $this->files[$className];
+    }
+
     public function getFile(string $className): string
     {
         return $this->files[$className];

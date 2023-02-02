@@ -25,16 +25,17 @@ class PhpUniterIntegration
      * @throws PhpUnitRegistrationInaccessible
      * @throws PhpUnitTestInaccessible
      */
-    public function generatePhpUnitTest(LocalFile $localFile, bool $inspectorMode, bool $useDependent): PhpUnitTest
+    public function generatePhpUnitTest(LocalFile $localFile, bool $inspectorMode, bool $useDependent, string $overwriteOneMethod): PhpUnitTest
     {
         $response = $this->client->send(
             $this->generateRequest,
             [
                 'json' => [
-                    'class'          => $localFile->getFileBody(),
-                    'access_token'   => $this->generateRequest->getToken(),
-                    'inspector_mode' => $inspectorMode,
-                    'use_dependent'  => $useDependent,
+                    'class'                => $localFile->getFileBody(),
+                    'access_token'         => $this->generateRequest->getToken(),
+                    'inspector_mode'       => $inspectorMode,
+                    'use_dependent'        => $useDependent,
+                    'overwrite_one_method' => $overwriteOneMethod,
                 ],
             ]
         );
@@ -44,14 +45,20 @@ class PhpUniterIntegration
         }
 
         $generatedTestJson = $response->getBody()->getContents();
-        /** @var string[] $generatedTest */
+        /** @var string[]|string[][] $generatedTest */
         $generatedTest = json_decode($generatedTestJson, true);
         $generatedTestText = $generatedTest['test'];
+        /** @var string[] $generatedTestMethods */
+        $generatedTestMethods = $generatedTest['test_methods'] ?? [];
+        $className = $generatedTest['class'];
+        $namespace = $generatedTest['namespace'];
 
         return new PhpUnitTest(
             $localFile,
             $generatedTestText,
-            $generatedTest
+            $className,
+            $namespace,
+            $generatedTestMethods
         );
     }
 }

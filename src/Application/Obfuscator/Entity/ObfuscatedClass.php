@@ -42,9 +42,26 @@ class ObfuscatedClass implements Obfuscated
         return new LocalFile($this->localFile->getFilePath(), $this->getObfuscatedFileBody());
     }
 
+    /**
+     * @throws ObfuscationFailed
+     */
     public function deObfuscate(string $fileBody): string
     {
         return $this->obfuscator->deObfuscate($this->map, $fileBody);
+    }
+
+    /**
+     * @throws ObfuscationFailed
+     */
+    public function deObfuscateMethods(array $methods): array
+    {
+        $res = [];
+        foreach ($methods as $name => $method) {
+            $newName = $this->obfuscator->deObfuscate($this->map, $name);
+            $res[$newName] = $this->obfuscator->deObfuscate($this->map, $method);
+        }
+
+        return $res;
     }
 
     public function getKeySaver(string $mapKey): callable

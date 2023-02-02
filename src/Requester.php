@@ -28,7 +28,7 @@ class Requester
         $this->basePath = $basePath;
     }
 
-    public function generate(string $filePath): int
+    public function generate(string $filePath, string $overwriteOneMethod = ''): int
     {
         try {
             chdir($this->basePath);
@@ -39,7 +39,7 @@ class Requester
 
             try {
                 $localFile = $this->obfuscatorFabric->createFile($filePath);
-                $this->phpUnitTest = $this->phpUnitService->process($localFile, $this->obfuscatorFabric);
+                $this->phpUnitTest = $this->phpUnitService->process($localFile, $this->obfuscatorFabric, $overwriteOneMethod);
                 $this->report->info('Generated test was written to '.$this->phpUnitTest->getPathToTest());
             } catch (GuzzleException $e) {
                 $this->report->error($e->getMessage());

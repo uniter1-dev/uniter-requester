@@ -1,0 +1,36 @@
+<?php
+
+use Foo;
+use Mockery;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+
+/**
+* @see Foo
+*/
+class FooTest extends MockeryTestCase
+{
+    /**
+    * @see Foo::first()
+    */
+    public function testFirst0()
+    {
+        $foo = new Foo();
+        $this->assertEquals(8, $foo->first(ARG_x));
+    }
+    /**
+    * @see Foo::first()
+    */
+    public function testFirst11()
+    {
+        $foo = new Foo();
+        $this->assertEquals(7, $foo->first(ARG_x));
+    }
+    /**
+    * @see Foo::first()
+    */
+    public function testFirst10()
+    {
+        $foo = new Foo();
+        $this->assertEquals(EXPECTED_RETURN, $foo->first(ARG_x));
+    }
+}

@@ -10,6 +10,7 @@ use Uniter1\UniterRequester\Application\Generation\UseGenerator;
 use Uniter1\UniterRequester\Application\Obfuscator\Entity\ObfuscatedClass;
 use Uniter1\UniterRequester\Application\Obfuscator\KeyGenerator\ObfuscateNameMaker;
 use Uniter1\UniterRequester\Application\Obfuscator\ObfuscatorFabric;
+use Uniter1\UniterRequester\Application\PhpParser\RequesterParser;
 use Uniter1\UniterRequester\Application\PhpUniter\Entity\PhpUnitTest;
 use Uniter1\UniterRequester\Application\PhpUniter\Exception\GeneratedTestEmpty;
 use Uniter1\UniterRequester\Application\PhpUniter\Exception\LocalFileEmpty;
@@ -57,7 +58,7 @@ class PhpUnitService
      * @throws LocalFileEmpty
      * @throws \Uniter1\UniterRequester\Infrastructure\Exception\PhpUnitRegistrationInaccessible
      */
-    public function process(LocalFile $classFile, ObfuscatorFabric $obfuscatorFabric): PhpUnitTest
+    public function process(LocalFile $classFile, ObfuscatorFabric $obfuscatorFabric, string $overwriteOneMethod): PhpUnitTest
     {
         $obfuscated = $classFile;
 
@@ -71,26 +72,38 @@ class PhpUnitService
             /** @var LocalFile $obfuscatedSourceFile */
             /** @var ObfuscatedClass $obfuscator */
             $obfuscatedSourceFile = $obfuscator->makeObfuscated();
-            $phpUnitTest = $this->integration->generatePhpUnitTest($obfuscatedSourceFile, $this->inspectorMode, $this->useDependent);
-            $testObfuscatedGenerated = $phpUnitTest->getObfuscatedUnitTest();
+            $phpUnitTest = $this->integration->generatePhpUnitTest($obfuscatedSourceFile, $this->inspectorMode, $this->useDependent, $overwriteOneMethod);
+            if (!$overwriteOneMethod) {
+                $testObfuscatedGenerated = $phpUnitTest->getObfuscatedUnitTest();
 
-            $deObfuscated = $obfuscator->deObfuscate($testObfuscatedGenerated);
-            $phpUnitTest->setFinalUnitTest($deObfuscated);
+                $deObfuscated = $obfuscator->deObfuscate($testObfuscatedGenerated);
+                $phpUnitTest->setFinalUnitTest($deObfuscated);
+            } else {
+                $obfuscatedMethods = $phpUnitTest->getTestMethods();
+                $deObfuscatedMethods = $obfuscator->deObfuscateMethods($obfuscatedMethods);
+            }
         } else {
-            $phpUnitTest = $this->integration->generatePhpUnitTest($classFile, $this->inspectorMode, $this->useDependent);
+            $phpUnitTest = $this->integration->generatePhpUnitTest($classFile, $this->inspectorMode, $this->useDependent, $overwriteOneMethod);
             $phpUnitTest->setFinalUnitTest($phpUnitTest->getObfuscatedUnitTest());
+            $deObfuscatedMethods = $phpUnitTest->getTestMethods();
         }
 
-        $classText = $classFile->getFileBody();
-        $className = $this->findClassName($classFile);
+        $className = $phpUnitTest->getClassName();
+        $srcNamespace = $phpUnitTest->getNamespace();
 
-        $srcNamespace = $this->namespaceGenerator->findNamespace($classText);
-        $testNamespace = $this->namespaceGenerator->makeNamespace($srcNamespace);
-        $testText = $phpUnitTest->getFinalUnitTest();
-        $useHelper = $this->useGenerator->getUseHelper($testText);
-        $testCode = $this->useGenerator->addUse($useHelper, $testText);
-        $testCode = $this->namespaceGenerator->addNamespace($testCode, $testNamespace);
         $relativePath = $this->namespaceGenerator->makePathToTest($srcNamespace);
+        $testNamespace = $this->namespaceGenerator->makeNamespace($srcNamespace);
+
+        if (!$overwriteOneMethod) {
+            $testText = $phpUnitTest->getFinalUnitTest();
+            $useHelper = $this->useGenerator->getUseHelper($testText);
+            $testCode = $this->useGenerator->addUse($useHelper, $testText);
+            $testCode = $this->namespaceGenerator->addNamespace($testCode, $testNamespace);
+        } else {
+            $testText = $this->testPlacer->getOldTest($relativePath, $className.'Test.php');
+            $testCode = RequesterParser::fetch($testText, $deObfuscatedMethods, $overwriteOneMethod);
+            $testCode = str_replace("}\n\n", "}\n", $testCode);
+        }
 
         $phpUnitTest->setFinalUnitTest($testCode);
 

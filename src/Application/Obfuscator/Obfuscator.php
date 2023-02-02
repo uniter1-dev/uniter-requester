@@ -58,9 +58,10 @@ class Obfuscator
         }
 
         foreach ($map->getMapType($map::METHODS) as $methodPair) {
-            $deObfuscated = $this->deReplace($methodPair, $deObfuscated);
             $deObfuscated = $this->deReplaceCaps($methodPair, $deObfuscated);
+            $deObfuscated = $this->deReplace($methodPair, $deObfuscated);
         }
+
         foreach ($map->getMapType($map::CONSTANTS) as $methodPair) {
             $deObfuscated = $this->deReplace($methodPair, $deObfuscated);
         }
@@ -102,6 +103,17 @@ class Obfuscator
             throw new ObfuscationFailed('Wrong map structure');
         }
 
-        return str_replace(ucfirst($one), ucfirst($two), $deObfuscated);
+        return str_replace('test'.$one, 'test'.ucfirst($two), $deObfuscated);
+    }
+
+    public function capitaliseTestMethodName(string $testMethodName): string
+    {
+        if (0 === strpos($testMethodName, 'test')) {
+            $mn = substr($testMethodName, 4);
+
+            return 'test'.ucfirst($mn);
+        }
+
+        return $testMethodName;
     }
 }

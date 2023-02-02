@@ -52,6 +52,13 @@ class UnitTestRepository implements UnitTestRepositoryInterface
         throw new FileNotAccessed("File $pathToTest was not saved");
     }
 
+    public function getOne(string $relativePath, string $className): string
+    {
+        $pathToTest = $this->projectRoot.'/'.$relativePath.'/'.$className;
+
+        return file_get_contents($pathToTest);
+    }
+
     protected function touchDir(string $dirPath): bool
     {
         if (is_dir($dirPath)) {

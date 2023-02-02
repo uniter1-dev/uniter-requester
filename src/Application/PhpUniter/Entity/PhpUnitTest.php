@@ -11,12 +11,18 @@ class PhpUnitTest
     private string $finalUnitTest = '';
     private array $repositories;
     private string $pathToTest = '';
+    private array $testMethods;
+    private string $className;
+    private string $namespace;
 
-    public function __construct(LocalFile $localFile, string $unitTest, array $repositories = [])
+    public function __construct(LocalFile $localFile, string $unitTest, string $className, string $namespace, array $testMethods = [], array $repositories = [])
     {
         $this->localFile = $localFile;
         $this->obfuscatedUnitTest = $unitTest;
         $this->repositories = $repositories;
+        $this->testMethods = $testMethods;
+        $this->className = $className;
+        $this->namespace = $namespace;
     }
 
     public function getObfuscatedUnitTest(): string
@@ -52,5 +58,20 @@ class PhpUnitTest
     public function getRepositories(): array
     {
         return $this->repositories;
+    }
+
+    public function getTestMethods(): array
+    {
+        return $this->testMethods;
+    }
+
+    public function getClassName(): string
+    {
+        return $this->className;
+    }
+
+    public function getNamespace(): string
+    {
+        return $this->namespace;
     }
 }

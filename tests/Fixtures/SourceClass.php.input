@@ -1,0 +1,172 @@
+<?php
+
+use Foo;
+use Mockery;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+
+/**
+* @see Foo
+*/
+class FooTest extends MockeryTestCase
+{
+    /**
+    * @see Foo::testMethod()
+    * @uniter_chain_throwable_type Throwable type in top of injection chain. Context: class: Foo, method: testMethod, flow: 01, injection: new \Exception('11')
+    */
+    public function testTestMethod01()
+    {
+        $foo = new Foo();
+        $this->assertEquals(EXPECTED_RETURN, $foo->testMethod(ARG_x));
+    }
+    /**
+    * @see Foo::testMethod()
+    * @uniter_chain_throwable_type Throwable type in top of injection chain. Context: class: Foo, method: testMethod, flow: 01, injection: new \Exception('11')
+    */
+    public function testTestMethodWithException53Flow01()
+    {
+        $foo = new Foo();
+        $this->expectException('Exception');
+        $foo->testMethod(ARG_x);
+    }
+    /**
+    * @see Foo::testMethod()
+    */
+    public function testTestMethod00()
+    {
+        $foo = new Foo();
+        $this->assertEquals(EXPECTED_RETURN, $foo->testMethod(ARG_x));
+    }
+    /**
+    * @see Foo::testMethod()
+    */
+    public function testTestMethodWithException53Flow00()
+    {
+        $foo = new Foo();
+        $this->expectException('Exception');
+        $foo->testMethod(ARG_x);
+    }
+    /**
+    * @see Foo::testMethod()
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: testMethod, flow: 10, injection: \Add::BAR
+    * @uniter_chain_throwable_type Throwable type in top of injection chain. Context: class: Foo, method: testMethod, flow: 10, injection: new \Exception('')
+    */
+    public function testTestMethod10()
+    {
+        /** @var Foo $foo */
+        $foo = Mockery::mock(Foo::class)->makePartial();
+        $foo->shouldReceive('first')->andReturn(RETURN_first);
+        $this->assertEquals(12, $foo->testMethod(ARG_x));
+    }
+    /**
+    * @see Foo::testMethod()
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: testMethod, flow: 10, injection: \Add::BAR
+    * @uniter_chain_throwable_type Throwable type in top of injection chain. Context: class: Foo, method: testMethod, flow: 10, injection: new \Exception('')
+    */
+    public function testTestMethodWithException53Flow10()
+    {
+        /** @var Foo $foo */
+        $foo = Mockery::mock(Foo::class)->makePartial();
+        $foo->shouldReceive('first')->andReturn(RETURN_first);
+        $this->expectException('Exception');
+        $foo->testMethod(ARG_x);
+    }
+    /**
+    * @see Foo::testMethod()
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: testMethod, flow: 1100, injection: \Add::BAR
+    * @uniter_chain_throwable_type Throwable type in top of injection chain. Context: class: Foo, method: testMethod, flow: 1100, injection: new \Exception('')
+    */
+    public function testTestMethod1100()
+    {
+        /** @var Foo $foo */
+        $foo = Mockery::mock(Foo::class)->makePartial();
+        $foo->shouldReceive('first')->andReturn(RETURN_first);
+        $this->assertEquals(EXPECTED_RETURN, $foo->testMethod(ARG_x));
+    }
+    /**
+    * @see Foo::testMethod()
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: testMethod, flow: 1100, injection: \Add::BAR
+    * @uniter_chain_throwable_type Throwable type in top of injection chain. Context: class: Foo, method: testMethod, flow: 1100, injection: new \Exception('')
+    */
+    public function testTestMethodWithException53Flow1100()
+    {
+        /** @var Foo $foo */
+        $foo = Mockery::mock(Foo::class)->makePartial();
+        $foo->shouldReceive('first')->andReturn(RETURN_first);
+        $this->expectException('Exception');
+        $foo->testMethod(ARG_x);
+    }
+    /**
+    * @see Foo::testMethod()
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: testMethod, flow: 111, injection: \Add::BAR
+    * @uniter_chain_throwable_type Throwable type in top of injection chain. Context: class: Foo, method: testMethod, flow: 111, injection: new \Exception('')
+    */
+    public function testTestMethod111()
+    {
+        /** @var Foo $foo */
+        $foo = Mockery::mock(Foo::class)->makePartial();
+        $foo->shouldReceive('first')->andReturn(RETURN_first);
+        $this->assertEquals(12, $foo->testMethod(ARG_x));
+    }
+    /**
+    * @see Foo::testMethod()
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: testMethod, flow: 111, injection: \Add::BAR
+    * @uniter_chain_throwable_type Throwable type in top of injection chain. Context: class: Foo, method: testMethod, flow: 111, injection: new \Exception('')
+    */
+    public function testTestMethodWithException53Flow111()
+    {
+        /** @var Foo $foo */
+        $foo = Mockery::mock(Foo::class)->makePartial();
+        $foo->shouldReceive('first')->andReturn(RETURN_first);
+        $this->expectException('Exception');
+        $foo->testMethod(ARG_x);
+    }
+    /**
+    * @see Foo::testMethod()
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: testMethod, flow: 1101, injection: \Add::BAR
+    * @uniter_chain_throwable_type Throwable type in top of injection chain. Context: class: Foo, method: testMethod, flow: 1101, injection: new \Exception('')
+    */
+    public function testTestMethod1101()
+    {
+        /** @var Foo $foo */
+        $foo = Mockery::mock(Foo::class)->makePartial();
+        $foo->shouldReceive('first')->andReturn(RETURN_first);
+        $this->assertEquals(EXPECTED_RETURN, $foo->testMethod(ARG_x));
+    }
+    /**
+    * @see Foo::testMethod()
+    * @uniter_chain_wrong_type Unknown type for injection chain. Context: class: Foo, method: testMethod, flow: 1101, injection: \Add::BAR
+    * @uniter_chain_throwable_type Throwable type in top of injection chain. Context: class: Foo, method: testMethod, flow: 1101, injection: new \Exception('')
+    */
+    public function testTestMethodWithException53Flow1101()
+    {
+        /** @var Foo $foo */
+        $foo = Mockery::mock(Foo::class)->makePartial();
+        $foo->shouldReceive('first')->andReturn(RETURN_first);
+        $this->expectException('Exception');
+        $foo->testMethod(ARG_x);
+    }
+    /**
+    * @see Foo::first()
+    */
+    public function testFirst0()
+    {
+        $foo = new Foo();
+        $this->assertEquals(8, $foo->first(ARG_x));
+    }
+    /**
+    * @see Foo::first()
+    */
+    public function testFirst11()
+    {
+        $foo = new Foo();
+        $this->assertEquals(7, $foo->first(ARG_x));
+    }
+    /**
+    * @see Foo::first()
+    */
+    public function testFirst10()
+    {
+        $foo = new Foo();
+        $this->assertEquals(EXPECTED_RETURN, $foo->first(ARG_x));
+    }
+}
