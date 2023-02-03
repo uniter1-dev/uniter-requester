@@ -13,6 +13,11 @@
             "name": "Eduard Fomin",
             "email": "eduard.fomin@uniter1.tech",
             "role": "Developer"
+        },
+        {
+            "name": "Sergey Pavlov",
+            "email": "sergey.pavlov@uniter1.tech",
+            "role": "Developer"
         }
     ],
     "require": {
